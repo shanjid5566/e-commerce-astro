@@ -160,12 +160,12 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
             {/* Table Header */}
             <thead className="bg-slate-50/80 text-slate-500 font-bold border-b border-slate-200/80 uppercase tracking-wider text-[11px]">
               <tr>
-                <th className="py-3.5 px-4 sm:px-6">Product Item</th>
-                <th className="py-3.5 px-4">Category</th>
-                <th className="py-3.5 px-4">Price</th>
-                <th className="py-3.5 px-4">Discount</th>
-                <th className="py-3.5 px-4">Badge</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+                <th className="py-2 px-4 sm:px-6">Product Item</th>
+                <th className="py-2 px-4">Category</th>
+                <th className="py-2 px-4">Price</th>
+                <th className="py-2 px-4">Discount</th>
+                <th className="py-2 px-4">Badge</th>
+                <th className="py-2 px-4 text-right">Actions</th>
               </tr>
             </thead>
 
@@ -178,7 +178,7 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
                     <tr key={p.id} className="hover:bg-slate-50/60 transition">
                       
                       {/* Title & Image */}
-                      <td className="py-3.5 px-4 sm:px-6">
+                      <td className="py-3 px-4 sm:px-6">
                         <div className="flex items-center gap-3">
                           <img
                             src={p.image}

@@ -133,7 +133,7 @@ const INITIAL_ORDERS: AdminOrder[] = [
   },
 ];
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 6;
 
 export default function AdminOrdersManager() {
   const [orders, setOrders] = useState<AdminOrder[]>(INITIAL_ORDERS);
