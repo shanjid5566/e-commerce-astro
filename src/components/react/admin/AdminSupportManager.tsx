@@ -9,6 +9,7 @@ import {
   X,
   Send,
   MessageCircle,
+  ArrowLeft
 } from 'lucide-react';
 
 interface Props {
@@ -20,6 +21,9 @@ export default function AdminSupportManager({ initialMessages }: Props) {
   const [selectedId, setSelectedId] = useState<string>(initialMessages[0]?.id || '');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'All' | 'New' | 'Replied' | 'Closed'>('All');
+
+  // Mobile Master-Detail view state: 'list' (shows all tickets) | 'detail' (shows reply view)
+  const [mobileView, setMobileView] = useState<'list' | 'detail'>('list');
 
   // Response form
   const [replyText, setReplyText] = useState('');
@@ -79,6 +83,11 @@ export default function AdminSupportManager({ initialMessages }: Props) {
     showToast(`Response recorded for ${selectedMessage.name}!`);
   };
 
+  const handleSelectMessage = (id: string) => {
+    setSelectedId(id);
+    setMobileView('detail'); // On mobile, automatically navigate to reply detail view
+  };
+
   return (
     <div className="h-full flex flex-col min-h-0 space-y-3">
       
@@ -99,8 +108,10 @@ export default function AdminSupportManager({ initialMessages }: Props) {
         </div>
       )}
 
-      {/* Top Search & Filter Bar (Compact, fits screen) */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white px-4 py-2.5 rounded-2xl border border-slate-200/80 shadow-2xs shrink-0">
+      {/* Top Search & Filter Bar (Visible in list mode on mobile, always visible on desktop) */}
+      <div className={`flex flex-col sm:flex-row items-center justify-between gap-3 bg-white px-4 py-2.5 rounded-2xl border border-slate-200/80 shadow-2xs shrink-0 ${
+        mobileView === 'detail' ? 'hidden lg:flex' : 'flex'
+      }`}>
         
         {/* Generous Search Input */}
         <div className="relative w-full sm:flex-1 sm:max-w-xl">
@@ -166,17 +177,19 @@ export default function AdminSupportManager({ initialMessages }: Props) {
         </div>
       </div>
 
-      {/* 2-Column Split Workspace (Fills 100% remaining screen height) */}
+      {/* 2-Column Split Workspace (Mobile switches between list & detail, desktop displays both side-by-side) */}
       <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
         
-        {/* Left Column (5 cols): Messages List (Scrolls internally) */}
-        <div className="lg:col-span-5 h-full flex flex-col min-h-0 bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
+        {/* Left Column (5 cols): Messages List */}
+        <div className={`lg:col-span-5 h-full flex flex-col min-h-0 bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden ${
+          mobileView === 'detail' ? 'hidden lg:flex' : 'flex'
+        }`}>
           <div className="p-3 px-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70 shrink-0">
             <span className="text-xs font-extrabold text-indigo-950 uppercase tracking-wider flex items-center gap-2">
               <MessageSquare className="w-3.5 h-3.5 text-rose-500" />
               <span>Inquiries ({filteredMessages.length})</span>
             </span>
-            <span className="text-[11px] text-slate-400">Click to reply</span>
+            <span className="text-[11px] text-slate-400">Tap to view &amp; reply</span>
           </div>
 
           <div className="flex-1 min-h-0 overflow-y-auto divide-y divide-slate-100">
@@ -187,7 +200,7 @@ export default function AdminSupportManager({ initialMessages }: Props) {
                   <button
                     key={msg.id}
                     type="button"
-                    onClick={() => setSelectedId(msg.id)}
+                    onClick={() => handleSelectMessage(msg.id)}
                     className={`w-full text-left p-3.5 transition cursor-pointer flex flex-col gap-1.5 relative ${
                       isSelected
                         ? 'bg-rose-50/40 border-l-4 border-rose-500'
@@ -246,26 +259,38 @@ export default function AdminSupportManager({ initialMessages }: Props) {
           </div>
         </div>
 
-        {/* Right Column (7 cols): Full Submission Details & Answer Box (Scrolls internally, composer fixed) */}
-        <div className="lg:col-span-7 h-full flex flex-col min-h-0 bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
+        {/* Right Column (7 cols): Full Submission Details & Answer Box */}
+        <div className={`lg:col-span-7 h-full flex flex-col min-h-0 bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden ${
+          mobileView === 'list' ? 'hidden lg:flex' : 'flex'
+        }`}>
           {selectedMessage ? (
             <div className="h-full flex flex-col min-h-0">
               
-              {/* Submission Header Bar (Fixed, shrink-0) */}
-              <div className="p-4 px-5 border-b border-slate-100 bg-slate-50/60 shrink-0 space-y-2">
+              {/* Submission Header Bar */}
+              <div className="p-3.5 px-4 sm:px-5 border-b border-slate-100 bg-slate-50/60 shrink-0 space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-bold text-slate-400">
+                  <div className="flex items-center gap-2 min-w-0">
+                    {/* Mobile Back Button to return to ticket list */}
+                    <button
+                      type="button"
+                      onClick={() => setMobileView('list')}
+                      className="lg:hidden inline-flex items-center gap-1 text-xs font-bold text-slate-700 hover:text-indigo-950 bg-white hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg transition shadow-2xs cursor-pointer shrink-0"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" />
+                      <span>Back</span>
+                    </button>
+
+                    <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">
                       ID: #{selectedMessage.id}
                     </span>
-                    <span className="text-slate-300">•</span>
+                    <span className="text-slate-300 hidden sm:inline">•</span>
                     <span className="text-xs text-slate-500 font-semibold">{selectedMessage.createdAt}</span>
                     <span className="text-slate-300">•</span>
-                    <span className="text-xs font-black text-indigo-950">{selectedMessage.subject}</span>
+                    <span className="text-xs font-black text-indigo-950 truncate">{selectedMessage.subject}</span>
                   </div>
 
                   {/* Clean Status Pill */}
-                  <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ${
+                  <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0 ${
                     selectedMessage.status === 'New'
                       ? 'bg-rose-50 text-rose-600 border border-rose-100'
                       : 'bg-emerald-50 text-emerald-700 border border-emerald-100'
@@ -335,23 +360,23 @@ export default function AdminSupportManager({ initialMessages }: Props) {
               </div>
 
               {/* Fixed Response Composer at Bottom (shrink-0) */}
-              <div className="p-4 px-5 border-t border-slate-200/80 bg-white shrink-0 space-y-2.5">
+              <div className="p-3.5 px-4 sm:px-5 border-t border-slate-200/80 bg-white shrink-0 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-extrabold text-indigo-950">
                     Record Answer / Notes:
                   </span>
-                  <span className="text-[11px] text-slate-400">
+                  <span className="text-[11px] text-slate-400 hidden sm:inline">
                     Logs resolution &amp; marks message as Replied
                   </span>
                 </div>
 
-                <form onSubmit={handleSaveReply} className="space-y-2.5">
+                <form onSubmit={handleSaveReply} className="space-y-2">
                   <textarea
                     rows={2}
                     placeholder={`Type response or resolution notes for ${selectedMessage.name}...`}
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
-                    className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition resize-none leading-relaxed"
+                    className="w-full p-2.5 sm:p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition resize-none leading-relaxed"
                     required
                   />
 
