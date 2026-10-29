@@ -280,36 +280,40 @@ export default function AdminSupportManager({ initialMessages }: Props) {
             <div className="h-full flex flex-col min-h-0">
               
               {/* Submission Header Bar */}
-              <div className="p-3.5 px-4 sm:px-5 border-b border-slate-100 bg-slate-50/60 shrink-0 space-y-2">
+              <div className="p-3 sm:p-4 px-3.5 sm:px-5 border-b border-slate-100 bg-slate-50/80 shrink-0 space-y-2 sm:space-y-2.5">
+                
+                {/* Tier 1: Mobile Navigation / ID & Timestamp + Status Badge & Close/Reopen */}
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
                     {/* Mobile Back Button to return to ticket list */}
                     <button
                       type="button"
                       onClick={() => setMobileView('list')}
-                      className="lg:hidden inline-flex items-center gap-1 text-xs font-bold text-slate-700 hover:text-indigo-950 bg-white hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg transition shadow-2xs cursor-pointer shrink-0"
+                      className="lg:hidden inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-indigo-950 bg-white hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg transition shadow-2xs cursor-pointer shrink-0"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
                       <span>Back</span>
                     </button>
 
-                    <span className="text-[11px] font-bold text-slate-400 hidden sm:inline">
-                      ID: #{selectedMessage.id}
-                    </span>
-                    <span className="text-slate-300 hidden sm:inline">•</span>
-                    <span className="text-xs text-slate-500 font-semibold">{selectedMessage.createdAt}</span>
-                    <span className="text-slate-300">•</span>
-                    <span className="text-xs font-black text-indigo-950 truncate">{selectedMessage.subject}</span>
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold truncate">
+                      <span className="font-mono text-[11px] text-slate-600 font-bold bg-slate-200/80 px-1.5 py-0.5 rounded shrink-0">
+                        #{selectedMessage.id}
+                      </span>
+                      <span className="text-slate-300">•</span>
+                      <span className="text-[11px] text-slate-400 font-medium truncate">
+                        {selectedMessage.createdAt}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Status & Close/Reopen Controls */}
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ${
                       selectedMessage.status === 'New'
-                        ? 'bg-rose-50 text-rose-600 border border-rose-100'
+                        ? 'bg-rose-100 text-rose-700 border border-rose-200'
                         : selectedMessage.status === 'Replied'
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
-                        : 'bg-slate-100 text-slate-600 border border-slate-200'
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                        : 'bg-slate-200 text-slate-700 border border-slate-300'
                     }`}>
                       ● {selectedMessage.status}
                     </span>
@@ -318,38 +322,54 @@ export default function AdminSupportManager({ initialMessages }: Props) {
                       <button
                         type="button"
                         onClick={() => handleToggleClose(selectedMessage.id, 'Closed')}
-                        className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 hover:text-emerald-700 bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 px-2.5 py-1 rounded-lg transition cursor-pointer shadow-2xs"
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 hover:text-emerald-700 bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 px-2 py-1 rounded-lg transition cursor-pointer shadow-2xs"
                         title="Mark ticket as resolved and closed"
                       >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>Close Ticket</span>
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span>Close</span>
                       </button>
                     ) : (
                       <button
                         type="button"
                         onClick={() => handleToggleClose(selectedMessage.id, 'Replied')}
-                        className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 hover:text-indigo-950 bg-white hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg transition cursor-pointer shadow-2xs"
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 hover:text-indigo-950 bg-white hover:bg-slate-100 border border-slate-200 px-2 py-1 rounded-lg transition cursor-pointer shadow-2xs"
                         title="Reopen this ticket"
                       >
-                        <RotateCcw className="w-3 h-3 text-slate-500" />
+                        <RotateCcw className="w-3 h-3 text-slate-500 shrink-0" />
                         <span>Reopen</span>
                       </button>
                     )}
                   </div>
                 </div>
 
-                {/* Customer Contact & Direct Reach Actions */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-slate-900">{selectedMessage.name}</span>
-                    <span className="text-slate-400 font-mono text-[11px] font-semibold">({selectedMessage.phone})</span>
+                {/* Tier 2: Subject Heading (Full text clearly visible, no truncation!) */}
+                <div className="pt-0.5">
+                  <h2 className="text-sm sm:text-base font-extrabold text-indigo-950 leading-snug">
+                    {selectedMessage.subject}
+                  </h2>
+                </div>
+
+                {/* Tier 3: Customer Info & Fast Reach Buttons */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 border-t border-slate-200/60">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-6 h-6 rounded-full bg-indigo-950 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+                      {selectedMessage.name.charAt(0)}
+                    </div>
+                    <div className="flex items-baseline gap-1.5 min-w-0">
+                      <span className="font-extrabold text-slate-900 text-xs truncate">
+                        {selectedMessage.name}
+                      </span>
+                      <span className="text-slate-400 font-mono text-[11px] font-medium shrink-0">
+                        ({selectedMessage.phone})
+                      </span>
+                    </div>
                   </div>
 
                   {/* Reach Actions */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     <a
                       href={`tel:${selectedMessage.phone}`}
-                      className="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold text-slate-700 transition"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1 bg-white hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg font-bold text-[11px] text-slate-700 transition shadow-2xs"
                     >
                       <Phone className="w-3 h-3 text-slate-500" />
                       <span>Call</span>
@@ -359,13 +379,14 @@ export default function AdminSupportManager({ initialMessages }: Props) {
                       href={`https://wa.me/88${selectedMessage.phone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(selectedMessage.name)},%20this%20is%20WinterCart%20regarding%20your%20inquiry%20(${encodeURIComponent(selectedMessage.subject)}):`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded-lg font-bold transition shadow-xs"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded-lg font-bold text-[11px] transition shadow-2xs"
                     >
                       <MessageCircle className="w-3 h-3" />
                       <span>WhatsApp</span>
                     </a>
                   </div>
                 </div>
+
               </div>
 
               {/* Scrollable Conversation Content Area */}
@@ -424,7 +445,7 @@ export default function AdminSupportManager({ initialMessages }: Props) {
                       type="button"
                       disabled={!replyText.trim()}
                       onClick={(e) => handleSaveReply(e, true)}
-                      className="inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 text-slate-700 font-bold text-xs px-3.5 py-2 rounded-xl transition cursor-pointer"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 text-slate-700 font-bold text-xs px-3 py-2 rounded-xl transition cursor-pointer"
                       title="Send answer and mark ticket as closed"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
@@ -434,7 +455,7 @@ export default function AdminSupportManager({ initialMessages }: Props) {
                     <button
                       type="submit"
                       disabled={!replyText.trim()}
-                      className="inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 disabled:opacity-50 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm shadow-rose-200 transition cursor-pointer active:scale-95"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-rose-500 hover:bg-rose-600 disabled:opacity-50 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-sm shadow-rose-200 transition cursor-pointer active:scale-95"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Save Response</span>
