@@ -1,0 +1,64 @@
+---
+// src/pages/about.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About Us | WinterCart BD">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    
+    {/* Breadcrumbs */}
+    <nav class="flex items-center gap-2 text-xs text-slate-500 mb-8" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-rose-500 transition">Home</a>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-900 font-semibold">About Us</span>
+    </nav>
+
+    {/* Hero Story Banner */}
+    <div class="max-w-3xl mx-auto text-center space-y-6">
+      <span class="text-xs font-bold text-rose-500 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100">
+        Our Winter Journey
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-black text-indigo-950 tracking-tight leading-tight">
+        Premium Winter Wear, Crafted for Bangladesh
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+        WinterCart was founded with a singular purpose: to deliver world-class winter fashion, heavyweight fleece hoodies, genuine leather jackets, and authentic cashmere wraps directly to doorsteps across all 64 districts of Bangladesh.
+      </p>
+    </div>
+
+    {/* Highlights Grid */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-8 text-center space-y-3 shadow-xs">
+        <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-500 text-2xl flex items-center justify-center mx-auto">
+          🧥
+        </div>
+        <h3 class="font-extrabold text-lg text-indigo-950">Heavyweight Fabric</h3>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          We use 350+ GSM pre-shrunk fleece and high-density knit wool to guarantee genuine winter warmth.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-8 text-center space-y-3 shadow-xs">
+        <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-500 text-2xl flex items-center justify-center mx-auto">
+          🚚
+        </div>
+        <h3 class="font-extrabold text-lg text-indigo-950">Nationwide COD</h3>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Reliable cash on delivery throughout Dhaka and every division with free delivery on orders above ৳2,500.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-8 text-center space-y-3 shadow-xs">
+        <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-500 text-2xl flex items-center justify-center mx-auto">
+          🤝
+        </div>
+        <h3 class="font-extrabold text-lg text-indigo-950">7-Day Free Exchange</h3>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Didn't get the right fit? Exchange sizes effortlessly within 7 days with our doorstep exchange support.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>
+

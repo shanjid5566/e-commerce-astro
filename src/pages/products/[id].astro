@@ -1,0 +1,130 @@
+---
+// src/pages/products/[id].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProducts } from '../../services/productService';
+import ProductDetailsActions from '../../components/react/ProductDetailsActions';
+import ProductImageGallery from '../../components/react/ProductImageGallery';
+
+export async function getStaticPaths() {
+  const products = await getProducts();
+  return products.map((product) => ({
+    params: { id: product.id },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+
+if (!product) {
+  return Astro.redirect('/404');
+}
+
+const discountPercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+---
+
+<BaseLayout title={`${product.title} | WinterCart`}>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    
+    {/* Breadcrumbs Navigation */}
+    <nav class="flex items-center gap-2 text-xs text-slate-500 mb-8 overflow-x-auto whitespace-nowrap">
+      <a href="/" class="hover:text-rose-500 transition">Home</a>
+      <span class="text-slate-300">/</span>
+      <a href="/products" class="hover:text-rose-500 transition">Products</a>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-400">{product.category}</span>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-900 font-semibold truncate">{product.title}</span>
+    </nav>
+
+    {/* Main 2-Column Product Grid */}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+      
+      {/* Product Image Gallery with Thumbnails & Navigation Arrows */}
+      <div class="lg:col-span-6">
+        <ProductImageGallery
+          images={product.images && product.images.length > 0 ? product.images : [product.image]}
+          title={product.title}
+          badge={product.badge}
+          client:load
+        />
+      </div>
+
+      {/* Product Purchase Panel */}
+      <div class="lg:col-span-6 space-y-6">
+        <div>
+          <span class="text-xs font-bold text-rose-500 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100 inline-block mb-3">
+            {product.category}
+          </span>
+          <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            {product.title}
+          </h1>
+        </div>
+
+        {/* Pricing Block */}
+        <div class="flex items-baseline gap-3.5 pt-1">
+          <span class="text-3xl sm:text-4xl font-black text-slate-900">৳{product.price}</span>
+          <span class="text-lg text-slate-400 line-through">৳{product.originalPrice}</span>
+          {discountPercent > 0 && (
+            <span class="bg-rose-500 text-white text-xs font-black px-2.5 py-1 rounded-lg shadow-sm">
+              Save {discountPercent}%
+            </span>
+          )}
+        </div>
+
+        {/* Product Description */}
+        <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+          Crafted from ultra-durable premium winter fabrics to provide guaranteed warmth, supreme comfort, and modern streetwear aesthetic throughout the chilly season.
+        </p>
+
+        {/* Interactive Add to Cart, Size Selection & Quantity Island */}
+        <ProductDetailsActions product={product} client:load />
+
+        {/* Key Fabric & Care Highlights */}
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2 text-xs text-slate-600">
+          <p className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">Product Highlights</p>
+          <ul class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+            <li class="flex items-center gap-1.5">✓ 100% Guaranteed Heavy Warmth</li>
+            <li class="flex items-center gap-1.5">✓ Pre-Shrunk &amp; Anti-Pilling</li>
+            <li class="flex items-center gap-1.5">✓ Reinforced High-Durability Stitching</li>
+            <li class="flex items-center gap-1.5">✓ Machine Washable &amp; Colorfast</li>
+          </ul>
+        </div>
+
+        {/* 4 Trust Badges Grid */}
+        <div class="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs text-slate-600">
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200/70 shadow-2xs">
+            <span class="text-rose-500 text-lg">🚚</span>
+            <div>
+              <p class="font-bold text-slate-800 text-[11px]">Fast Home Delivery</p>
+              <p class="text-[10px] text-slate-400">2-3 days across Bangladesh</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200/70 shadow-2xs">
+            <span class="text-rose-500 text-lg">🛡️</span>
+            <div>
+              <p class="font-bold text-slate-800 text-[11px]">100% Quality Fabric</p>
+              <p class="text-[10px] text-slate-400">Guaranteed winter warmth</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200/70 shadow-2xs">
+            <span class="text-rose-500 text-lg">🔄</span>
+            <div>
+              <p class="font-bold text-slate-800 text-[11px]">7-Day Easy Return</p>
+              <p class="text-[10px] text-slate-400">Hassle-free replacement</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200/70 shadow-2xs">
+            <span class="text-rose-500 text-lg">💵</span>
+            <div>
+              <p class="font-bold text-slate-800 text-[11px]">Cash on Delivery</p>
+              <p class="text-[10px] text-slate-400">Pay upon delivery at doorstep</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</BaseLayout>

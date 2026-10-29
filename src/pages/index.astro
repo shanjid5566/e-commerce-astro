@@ -1,0 +1,61 @@
+---
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getHeroSlides } from '../services/heroSliderService';
+import HeroSlider from '../components/react/HeroSlider';
+import CategoryGrid from '../components/sections/home/CategoryGrid.astro';
+import FeaturedProductGrid from '../components/react/FeaturedProductGrid';
+import TrustFeatures from '../components/sections/home/TrustFeatures.astro';
+import FAQAccordion from '../components/react/FAQAccordion';
+import { getProducts } from '../services/productService';
+
+const slides = await getHeroSlides();
+const products = await getProducts();
+---
+
+<BaseLayout title="WinterCart BD | Premium Winter Clothing Store">
+  
+  <!-- Clean Split Hero Slider Section -->
+  <HeroSlider slides={slides} client:load />
+
+  <!-- Trust Features Section -->
+  <TrustFeatures />
+
+  <!-- Category Collections -->
+  <CategoryGrid />
+
+  <!-- Featured Products -->
+  <section class="py-16 bg-slate-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest">Top Rated Items</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-indigo-950 tracking-tight">
+          Trending Winter Essentials
+        </h2>
+      </div>
+      <FeaturedProductGrid products={products} client:load />
+    </div>
+  </section>
+
+  <!-- Interactive FAQ Section -->
+  <section class="py-16 sm:py-20 bg-white border-t border-slate-200/60">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100">
+          Got Questions?
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-indigo-950 tracking-tight">
+          Frequently Asked Questions (FAQ)
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500">
+          Everything you need to know about delivery, cash on delivery, and size exchanges.
+        </p>
+      </div>
+
+      <FAQAccordion client:load />
+
+    </div>
+  </section>
+
+</BaseLayout>

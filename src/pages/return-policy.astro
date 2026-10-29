@@ -1,0 +1,183 @@
+---
+// src/pages/return-policy.astro
+import PolicyLayout from '../layouts/PolicyLayout.astro';
+
+const tocItems = [
+  { id: 'eligibility', label: 'Exchange Eligibility' },
+  { id: 'non-returnable', label: 'Non-Exchangeable Items' },
+  { id: 'delivery-fees', label: 'Exchange Delivery Fees' },
+  { id: 'refund-policy', label: 'Refund Policy' },
+  { id: 'support-channels', label: 'Support Contacts' },
+];
+---
+
+<PolicyLayout
+  title="Return & Exchange Policy | WinterCart"
+  breadcrumb="Return & Exchange Policy"
+  badgeIcon="🔄"
+  badgeText="7-Day Hassle-Free Exchange Guarantee"
+  badgeColor="emerald"
+  heading="Return & Exchange Policy"
+  description="We want you to feel completely warm and confident in your winter apparel. If your hoodie, jacket, or sweater doesn't fit quite right, we offer a simple, customer-first 7-day exchange process."
+  updatedDate="October 2026"
+  tocItems={tocItems}
+  helpTitle="Need a Size Swap?"
+  helpDescription="Send a photo of your product tag along with your desired size to get an instant exchange dispatched."
+  helpActionText="💬 Chat on WhatsApp"
+  helpActionHref="https://wa.me/8801700000000"
+>
+  {/* Named Slot: 3-Step Exchange Process Visual Flow */}
+  <div slot="top-banner" class="py-10 border-b border-slate-200/80">
+    <h2 class="text-lg sm:text-xl font-black text-indigo-950 mb-6 text-center">
+      How Doorstep Exchange Works in 3 Easy Steps
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-3 relative overflow-hidden">
+        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 font-black text-lg flex items-center justify-center">
+          1
+        </div>
+        <h3 class="font-extrabold text-indigo-950 text-base">Contact Our Team</h3>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Call us at <strong>+880 1700-000000</strong> or message on WhatsApp within 7 days of receiving your package. Share your Order ID and preferred size.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-3 relative overflow-hidden">
+        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 font-black text-lg flex items-center justify-center">
+          2
+        </div>
+        <h3 class="font-extrabold text-indigo-950 text-base">Keep Item Unused</h3>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Ensure the winter apparel is unwashed, unworn outside, and has all original brand tags and packaging intact.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-3 relative overflow-hidden">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 font-black text-lg flex items-center justify-center">
+          3
+        </div>
+        <h3 class="font-extrabold text-indigo-950 text-base">Doorstep Swap</h3>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Our delivery rider will arrive with your replacement size, hand it over, and collect the original parcel right at your doorstep!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* Main Policy Sections */}
+  {/* Section 1 */}
+  <section id="eligibility" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">1</span>
+      Exchange Eligibility
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      You may request an exchange within <strong>7 calendar days</strong> from the delivery timestamp if any of the following apply:
+    </p>
+    <div class="space-y-2 text-sm text-slate-600">
+      <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-slate-200/80">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <div>
+          <strong class="text-indigo-950">Size Fit Issue:</strong> The item is either too tight or too loose, and you need a different size (e.g. M to L).
+        </div>
+      </div>
+      <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-slate-200/80">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <div>
+          <strong class="text-indigo-950">Defective Fabric / Stitching:</strong> The garment has a manufacturing defect, damaged zipper, or stitching flaw upon arrival.
+        </div>
+      </div>
+      <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-slate-200/80">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <div>
+          <strong class="text-indigo-950">Incorrect Item Sent:</strong> The model, color, or category received does not match what was confirmed on your invoice.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Section 2 */}
+  <section id="non-returnable" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">2</span>
+      Non-Exchangeable Items &amp; Exceptions
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      To maintain strict hygiene standards and protect our customers, the following conditions cannot be exchanged:
+    </p>
+    <ul class="space-y-2 text-sm text-slate-600 list-disc pl-5">
+      <li><strong>Thermal Base Layer Underwear:</strong> Thermal sets that have been unsealed and worn directly against the body cannot be returned for hygiene and sanitary reasons.</li>
+      <li>Items that show clear signs of usage, perfume scents, body odors, stains, or have had tags removed.</li>
+      <li>Items that have been washed, dry-cleaned, ironed, or tailored.</li>
+      <li>Exchange requests submitted after the 7-day period has elapsed.</li>
+    </ul>
+  </section>
+
+  {/* Section 3 */}
+  <section id="delivery-fees" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">3</span>
+      Exchange Delivery Fees
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+      <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/70 space-y-1">
+        <span class="font-bold text-emerald-800 block">✨ WinterCart Fault (100% Free)</span>
+        <p class="text-emerald-900/80 text-xs leading-relaxed">
+          If we sent a wrong size or defective item, <strong>we bear 100% of the replacement shipping cost</strong>. You pay ৳0.
+        </p>
+      </div>
+      <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+        <span class="font-bold text-slate-800 block">🚚 Customer Preference / Fit Change</span>
+        <p class="text-slate-600 text-xs leading-relaxed">
+          If the item delivered was correct but you desire a different size or color, standard courier return fee (৳60 in Dhaka, ৳120 outside Dhaka) applies for the doorstep exchange.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Section 4 */}
+  <section id="refund-policy" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">4</span>
+      Refund Policy
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      In rare cases where an exchange cannot be completed because the desired replacement size is out of stock, we offer an immediate full refund:
+    </p>
+    <ul class="space-y-1.5 text-sm text-slate-600 list-disc pl-5">
+      <li>Refunds for Cash on Delivery orders are issued via <strong>bKash</strong>, <strong>Nagad</strong>, or direct bank transfer within 24 to 48 hours after our quality control team inspects the returned garment.</li>
+      <li>No hidden restocking fees are deducted.</li>
+    </ul>
+  </section>
+
+  {/* Section 5 */}
+  <section id="support-channels" class="scroll-mt-28 space-y-4 pt-4 border-t border-slate-200/80">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">5</span>
+      Start Your Exchange Now
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      Our customer service specialists are ready to make your exchange process seamless and effortless:
+    </p>
+    <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+          <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">Hotline</span>
+          <a href="tel:+8801700000000" class="text-sm font-bold text-rose-500 hover:underline">
+            +880 1700-000000
+          </a>
+          <p class="text-[11px] text-slate-500">Everyday: 9:00 AM – 10:00 PM</p>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+          <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">Email Support</span>
+          <a href="mailto:support@wintercart.com.bd" class="text-sm font-bold text-rose-500 hover:underline">
+            support@wintercart.com.bd
+          </a>
+          <p class="text-[11px] text-slate-500">Replies within 2 to 4 hours</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</PolicyLayout>

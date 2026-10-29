@@ -1,0 +1,153 @@
+---
+// src/pages/privacy-policy.astro
+import PolicyLayout from '../layouts/PolicyLayout.astro';
+
+const tocItems = [
+  { id: 'information-we-collect', label: 'Information We Collect' },
+  { id: 'how-we-use-information', label: 'How We Use Your Data' },
+  { id: 'order-payment-security', label: 'Order & COD Security' },
+  { id: 'logistics-partners', label: 'Courier & Logistics Partners' },
+  { id: 'cookies-storage', label: 'Cookies & Local Storage' },
+  { id: 'your-rights', label: 'Your Privacy Rights' },
+  { id: 'contact-support', label: 'Contact Data Officer' },
+];
+---
+
+<PolicyLayout
+  title="Privacy Policy | WinterCart"
+  breadcrumb="Privacy Policy"
+  badgeIcon="🛡️"
+  badgeText="Data Protection & Security"
+  badgeColor="rose"
+  heading="Privacy Policy"
+  description="At WinterCart Bangladesh, your privacy is our utmost priority. This policy outlines how we collect, handle, and protect your personal information when you shop with us."
+  updatedDate="October 2026"
+  tocItems={tocItems}
+>
+  {/* Section 1 */}
+  <section id="information-we-collect" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">1</span>
+      Information We Collect
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      When you interact with WinterCart, we collect information necessary to fulfill your orders, provide accurate delivery across Bangladesh, and improve your shopping experience:
+    </p>
+    <ul class="space-y-2 text-sm text-slate-600 list-disc pl-5">
+      <li><strong>Personal Contact Details:</strong> Full name, recipient phone number, email address, and complete delivery address including district and postal area.</li>
+      <li><strong>Order History:</strong> Products purchased, sizes selected, order dates, payment status, and Cash on Delivery preferences.</li>
+      <li><strong>Device &amp; Usage Information:</strong> Browser type, operating system, IP address, and pages visited on our store to optimize loading speeds and security.</li>
+    </ul>
+  </section>
+
+  {/* Section 2 */}
+  <section id="how-we-use-information" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">2</span>
+      How We Use Your Data
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      We use the information gathered solely for verified e-commerce operations:
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+      <div class="p-4 rounded-xl bg-white border border-slate-200/80 space-y-1">
+        <span class="font-bold text-indigo-950 block">📦 Delivery Fulfillment</span>
+        <p class="text-slate-500">Dispatching winter apparel directly to your doorstep via verified logistics couriers.</p>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200/80 space-y-1">
+        <span class="font-bold text-indigo-950 block">📞 Order Verification</span>
+        <p class="text-slate-500">Contacting you via phone or SMS to confirm delivery address, size availability, and COD details.</p>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200/80 space-y-1">
+        <span class="font-bold text-indigo-950 block">🔄 Exchange Handling</span>
+        <p class="text-slate-500">Managing our 7-Day hassle-free size exchange and product replacement requests.</p>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200/80 space-y-1">
+        <span class="font-bold text-indigo-950 block">🔒 Fraud Prevention</span>
+        <p class="text-slate-500">Preventing fictitious orders and protecting customer data against unauthorized access.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* Section 3 */}
+  <section id="order-payment-security" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">3</span>
+      Order &amp; Cash on Delivery (COD) Security
+    </h2>
+    <div class="p-5 rounded-2xl bg-emerald-50 border border-emerald-100 space-y-2 text-emerald-950 text-sm">
+      <div class="flex items-center gap-2 font-bold text-emerald-800">
+        <span>💵</span>
+        <span>100% Secure Cash on Delivery</span>
+      </div>
+      <p class="text-emerald-800/90 text-xs sm:text-sm leading-relaxed">
+        We do not store your debit card, credit card, or banking credentials on our servers. For Cash on Delivery orders, payment is handed directly to the authorized delivery rider only after your parcel arrives safely at your doorstep.
+      </p>
+    </div>
+  </section>
+
+  {/* Section 4 */}
+  <section id="logistics-partners" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">4</span>
+      Courier &amp; Logistics Partners
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      To ensure swift 2-3 business day delivery throughout Bangladesh, we share your recipient name, contact number, and address with trusted domestic courier partners (such as Steadfast, Pathao Courier, or RedX). These partners are legally prohibited from utilizing your personal data for any purpose other than fulfilling package delivery.
+    </p>
+  </section>
+
+  {/* Section 5 */}
+  <section id="cookies-storage" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">5</span>
+      Cookies &amp; Local Storage
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      Our store uses browser LocalStorage to remember items placed in your shopping cart so you do not lose your selections when navigating between pages or returning later. You can clear your cart at any time using the "Remove" button or by clearing your browser cache.
+    </p>
+  </section>
+
+  {/* Section 6 */}
+  <section id="your-rights" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">6</span>
+      Your Privacy Rights
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      You maintain full ownership of your personal data. At any time, you have the right to:
+    </p>
+    <ul class="space-y-1.5 text-sm text-slate-600 list-disc pl-5">
+      <li>Request a copy of the personal information stored in relation to your previous orders.</li>
+      <li>Request modification or complete deletion of your phone number and address from our customer database.</li>
+      <li>Opt out of promotional winter newsletters and promotional SMS notifications.</li>
+    </ul>
+  </section>
+
+  {/* Section 7 */}
+  <section id="contact-support" class="scroll-mt-28 space-y-4 pt-4 border-t border-slate-200/80">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">7</span>
+      Contact Our Data Officer
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      If you have any questions, concerns, or requests regarding this Privacy Policy, please reach out to our team:
+    </p>
+    <div class="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs space-y-3">
+      <div class="flex items-center gap-3">
+        <span class="text-rose-500 text-lg">📧</span>
+        <div>
+          <p class="text-xs text-slate-400 font-semibold">Official Email</p>
+          <p class="text-sm font-bold text-slate-900">support@wintercart.com.bd</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 pt-2 border-t border-slate-100">
+        <span class="text-rose-500 text-lg">📍</span>
+        <div>
+          <p class="text-xs text-slate-400 font-semibold">Headquarters</p>
+          <p class="text-sm font-bold text-slate-900">House #14, Road #07, Dhanmondi, Dhaka-1205, Bangladesh</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</PolicyLayout>

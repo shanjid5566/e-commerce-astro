@@ -1,0 +1,17 @@
+---
+// src/pages/cart.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CartView from '../components/react/CartView';
+---
+
+<BaseLayout title="Shopping Cart | WinterCart">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16 space-y-8">
+    <div>
+      <h1 class="text-3xl font-black text-slate-900 tracking-tight">Your Shopping Cart</h1>
+      <p class="text-slate-500 text-sm mt-1">Review your winter wear selections before placing order.</p>
+    </div>
+
+    <CartView client:load />
+  </div>
+</BaseLayout>
+

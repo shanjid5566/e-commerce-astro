@@ -1,0 +1,51 @@
+---
+// src/components/sections/home/CategoryGrid.astro
+import { getCategories } from '@services/productService';
+
+const categories = await getCategories();
+---
+
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+      <div>
+        <span class="text-xs font-bold text-rose-500 uppercase tracking-widest">Collections</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-indigo-950 tracking-tight mt-1">
+          Explore Winter Categories
+        </h2>
+      </div>
+      <a href="/products" class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-500 hover:text-rose-600 transition group">
+        <span>View All Categories</span>
+        <!-- ArrowRight icon as inline SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-1 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+      {categories.map((cat) => (
+        <a 
+          href={`/products?category=${cat.slug}`}
+          class="group relative rounded-2xl overflow-hidden bg-slate-100 aspect-[4/5] border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300"
+        >
+          <img 
+            src={cat.image} 
+            alt={cat.name}
+            class="w-full h-full object-cover group-hover:scale-110 transition duration-700" 
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+          
+          <div class="absolute bottom-0 left-0 right-0 p-4 text-center">
+            <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-rose-300 transition">
+              {cat.name}
+            </h3>
+            <p class="text-[11px] text-slate-300 mt-0.5">{cat.itemCount} Items</p>
+          </div>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>

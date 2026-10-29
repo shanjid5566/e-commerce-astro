@@ -1,0 +1,128 @@
+---
+// src/pages/terms-of-service.astro
+import PolicyLayout from '../layouts/PolicyLayout.astro';
+
+const tocItems = [
+  { id: 'acceptance', label: 'Acceptance of Terms' },
+  { id: 'products-pricing', label: 'Products & Pricing (৳ BDT)' },
+  { id: 'order-confirmation', label: 'Order Verification & Calls' },
+  { id: 'cash-on-delivery', label: 'Cash on Delivery (COD) Rules' },
+  { id: 'shipping-delivery', label: 'Shipping & Free Delivery' },
+  { id: 'cancellations', label: 'Order Cancellations' },
+  { id: 'governing-law', label: 'Governing Law' },
+];
+---
+
+<PolicyLayout
+  title="Terms of Service | WinterCart"
+  breadcrumb="Terms of Service"
+  badgeIcon="📜"
+  badgeText="Customer Agreement & Store Terms"
+  badgeColor="rose"
+  heading="Terms of Service"
+  description="Please read these Terms of Service carefully before purchasing products through WinterCart. By placing an order, you agree to be bound by the terms outlined below."
+  updatedDate="October 2026"
+  tocItems={tocItems}
+  helpTitle="Questions about Terms?"
+  helpDescription="Our support hotline is open 7 days a week to assist you."
+  helpActionText="Call +880 1700-000000"
+  helpActionHref="tel:+8801700000000"
+>
+  {/* Section 1 */}
+  <section id="acceptance" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">1</span>
+      Acceptance of Terms
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      By browsing our website, placing an order via our online checkout, or contacting our customer service hotline, you acknowledge that you have read, understood, and agree to adhere to these Terms of Service, along with our Privacy Policy and Return &amp; Exchange Policy.
+    </p>
+  </section>
+
+  {/* Section 2 */}
+  <section id="products-pricing" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">2</span>
+      Products &amp; Pricing (৳ BDT)
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      All prices on WinterCart are listed in <strong>Bangladeshi Taka (৳ BDT)</strong> and are inclusive of standard applicable taxes.
+    </p>
+    <ul class="space-y-2 text-sm text-slate-600 list-disc pl-5">
+      <li>We make every effort to display accurate fabric details (GSM, composition, warmth rating) and exact color tones of our winter apparel. However, subtle variations may occur due to photography lighting or monitor calibration.</li>
+      <li>We reserve the right to revise product prices, discounts, or seasonal campaign offers at any time without prior notice. Confirmed orders will honor the price stated at the time of purchase.</li>
+    </ul>
+  </section>
+
+  {/* Section 3 */}
+  <section id="order-confirmation" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">3</span>
+      Order Verification &amp; Confirmation Calls
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      To prevent accidental orders and ensure immediate delivery dispatch:
+    </p>
+    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 text-sm text-slate-700">
+      <p><strong>Verification Step:</strong> Our customer support representative may place a brief phone call or send an SMS confirmation to verify your delivery address, selected apparel size, and preferred delivery schedule.</p>
+      <p><strong>Unreachable Numbers:</strong> If a customer's phone number is continuously unreachable or incorrect after 3 attempts within 48 hours, WinterCart reserves the right to cancel the order.</p>
+    </div>
+  </section>
+
+  {/* Section 4 */}
+  <section id="cash-on-delivery" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">4</span>
+      Cash on Delivery (COD) Rules
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      Cash on Delivery is available across all 64 districts of Bangladesh. When placing a COD order:
+    </p>
+    <ul class="space-y-2 text-sm text-slate-600 list-disc pl-5">
+      <li>You agree to have the exact cash ready (or pay via approved MFS like bKash/Nagad if offered by the delivery rider) upon doorstep arrival.</li>
+      <li>Customers are encouraged to open the parcel and inspect the product in the presence of the courier rider to ensure the item matches your order.</li>
+    </ul>
+  </section>
+
+  {/* Section 5 */}
+  <section id="shipping-delivery" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">5</span>
+      Shipping &amp; Free Delivery Policy
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+      <div class="p-4 rounded-xl bg-white border border-slate-200/80 space-y-1">
+        <span class="font-bold text-rose-500 block">⚡ Inside Dhaka</span>
+        <p class="text-slate-600 font-medium">Standard Delivery: 24–48 Hours</p>
+        <p class="text-slate-400 text-xs">Standard delivery fee: ৳60 (FREE on orders over ৳2,500)</p>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200/80 space-y-1">
+        <span class="font-bold text-rose-500 block">🚚 Outside Dhaka (All Districts)</span>
+        <p class="text-slate-600 font-medium">Standard Delivery: 2–3 Business Days</p>
+        <p class="text-slate-400 text-xs">Standard delivery fee: ৳120 (FREE on orders over ৳2,500)</p>
+      </div>
+    </div>
+  </section>
+
+  {/* Section 6 */}
+  <section id="cancellations" class="scroll-mt-28 space-y-3">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">6</span>
+      Order Cancellations
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      You may cancel your order at any time before it has been handed over to our courier partner by contacting our support team at <strong>+880 1700-000000</strong>. Once an order is dispatched and in transit with the courier, cancellation may be subject to standard delivery charges.
+    </p>
+  </section>
+
+  {/* Section 7 */}
+  <section id="governing-law" class="scroll-mt-28 space-y-3 pt-4 border-t border-slate-200/80">
+    <h2 class="text-xl sm:text-2xl font-black text-indigo-950 flex items-center gap-2.5">
+      <span class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 text-sm font-bold flex items-center justify-center shrink-0">7</span>
+      Governing Law &amp; Jurisdiction
+    </h2>
+    <p class="text-slate-600 text-sm leading-relaxed">
+      These Terms of Service and any separate agreements whereby we provide you products shall be governed by and construed in accordance with the laws and consumer rights acts of the People's Republic of Bangladesh. Any dispute arising under these terms shall be subject to the exclusive jurisdiction of the courts of Dhaka, Bangladesh.
+    </p>
+  </section>
+</PolicyLayout>

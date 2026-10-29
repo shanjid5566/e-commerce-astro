@@ -1,0 +1,122 @@
+---
+// src/layouts/PolicyLayout.astro
+import BaseLayout from './BaseLayout.astro';
+
+export interface TocItem {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  breadcrumb: string;
+  badgeIcon?: string;
+  badgeText: string;
+  badgeColor?: 'rose' | 'emerald';
+  heading: string;
+  description: string;
+  updatedDate?: string;
+  tocItems: TocItem[];
+  helpTitle?: string;
+  helpDescription?: string;
+  helpActionText?: string;
+  helpActionHref?: string;
+}
+
+const {
+  title,
+  breadcrumb,
+  badgeIcon = '🛡️',
+  badgeText,
+  badgeColor = 'rose',
+  heading,
+  description,
+  updatedDate = 'October 2026',
+  tocItems,
+  helpTitle = 'Need Clarification?',
+  helpDescription = 'Our support team is available everyday from 9:00 AM to 10:00 PM.',
+  helpActionText = 'Call +880 1700-000000',
+  helpActionHref = 'tel:+8801700000000',
+} = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+    
+    {/* Breadcrumbs Navigation */}
+    <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6 sm:mb-8" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-rose-500 transition">Home</a>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-900 font-semibold">{breadcrumb}</span>
+    </nav>
+
+    {/* Hero Header (Centered) */}
+    <div class="border-b border-slate-200/80 pb-8 sm:pb-12 mb-8 sm:mb-10 text-center max-w-2xl mx-auto space-y-4">
+      <div class={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mx-auto ${
+        badgeColor === 'emerald'
+          ? 'bg-emerald-50 border border-emerald-100 text-emerald-700'
+          : 'bg-rose-50 border border-rose-100 text-rose-600'
+      }`}>
+        <span>{badgeIcon}</span>
+        <span>{badgeText}</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-indigo-950 tracking-tight">
+        {heading}
+      </h1>
+      <p class="text-sm sm:text-base text-slate-600 leading-relaxed mx-auto">
+        {description}
+      </p>
+      <div class="flex items-center justify-center gap-4 text-xs text-slate-400 font-medium pt-1">
+        <span>Last Updated: {updatedDate}</span>
+        <span>•</span>
+        <span>Applicable across Bangladesh</span>
+      </div>
+    </div>
+
+    {/* Optional Top Visual Banner Slot */}
+    <slot name="top-banner" />
+
+    {/* Main Content Layout with Sticky Quick-Navigation */}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-8 sm:pt-10 items-start">
+      
+      {/* Sticky Table of Contents Sidebar */}
+      <aside class="hidden lg:block lg:col-span-4 sticky top-28 space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs space-y-3">
+          <h3 class="text-xs font-black text-indigo-950 uppercase tracking-wider">
+            Quick Navigation
+          </h3>
+          <nav class="space-y-1.5 text-xs font-semibold text-slate-600" aria-label="Table of contents">
+            {tocItems.map((item, idx) => (
+              <a
+                href={`#${item.id}`}
+                class="block px-3 py-2 rounded-lg hover:bg-slate-50 hover:text-rose-500 transition"
+              >
+                {idx + 1}. {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        {/* Support Pill */}
+        <div class="bg-slate-900 text-white rounded-2xl p-5 shadow-sm space-y-3">
+          <p class="text-xs font-bold text-rose-400 uppercase tracking-wider">{helpTitle}</p>
+          <p class="text-xs text-slate-300 leading-relaxed">{helpDescription}</p>
+          <a
+            href={helpActionHref}
+            class="inline-block text-xs font-bold text-white bg-rose-500 hover:bg-rose-600 px-4 py-2 rounded-xl transition"
+          >
+            {helpActionText}
+          </a>
+        </div>
+      </aside>
+
+      {/* Main Content Slot for Policy Sections */}
+      <div class="lg:col-span-8 space-y-10 text-slate-700 leading-relaxed text-sm sm:text-base">
+        <slot />
+      </div>
+
+    </div>
+
+  </div>
+</BaseLayout>
+

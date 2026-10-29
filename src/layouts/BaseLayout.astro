@@ -1,0 +1,236 @@
+---
+// src/layouts/BaseLayout.astro
+import '../styles/global.css';
+import HeaderCartBadge from '../components/react/HeaderCartBadge';
+import MobileNav from '../components/react/MobileNav';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+
+interface Props {
+  title?: string;
+}
+
+const { title = 'WinterCart | Premium Winter Clothing Store Bangladesh' } = Astro.props;
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/' || currentPath === '';
+const isProducts = currentPath.startsWith('/products');
+const isTrack = currentPath.startsWith('/track-order');
+const isSizeGuide = currentPath.startsWith('/size-guide');
+const isAbout = currentPath.startsWith('/about');
+const isContact = currentPath.startsWith('/contact');
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen flex flex-col font-['Plus_Jakarta_Sans',sans-serif] bg-slate-50 text-slate-900 antialiased selection:bg-rose-500 selection:text-white">
+
+    <!-- Global Top Announcement Bar (Smooth Right-to-Left Ticker) -->
+    <div class="bg-indigo-950 text-slate-200 text-xs py-2 border-b border-indigo-900 overflow-hidden relative select-none">
+      <div class="flex w-max animate-marquee space-x-12 cursor-default">
+        <span class="inline-flex items-center gap-2 font-medium tracking-wide">
+          <span>🔥</span>
+          <span>Free Cash on Delivery for orders above ৳2,500 across Bangladesh!</span>
+          <span class="mx-6 text-slate-500">•</span>
+          <span>Guaranteed 100% Winter Warmth Fabric</span>
+          <span class="mx-6 text-slate-500">•</span>
+          <span>2-3 Days Fast Home Delivery</span>
+        </span>
+        <span class="inline-flex items-center gap-2 font-medium tracking-wide">
+          <span>🔥</span>
+          <span>Free Cash on Delivery for orders above ৳2,500 across Bangladesh!</span>
+          <span class="mx-6 text-slate-500">•</span>
+          <span>Guaranteed 100% Winter Warmth Fabric</span>
+          <span class="mx-6 text-slate-500">•</span>
+          <span>2-3 Days Fast Home Delivery</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Main Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+        
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 text-2xl font-black text-indigo-950 tracking-tight">
+          <div class="w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center text-white shadow-md shadow-rose-200">
+            <!-- ShoppingBag icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+          <span>Winter<span class="text-rose-500">Cart</span></span>
+        </a>
+
+        <!-- Desktop Navigation Menu (Home, Shop All, Track Order, Size Guide, About Us, Contact) -->
+        <nav class="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-semibold">
+          <a 
+            href="/" 
+            class={`relative py-1 transition-colors ${
+              isHome 
+                ? 'text-rose-500 font-bold after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-rose-500 after:rounded-full' 
+                : 'text-slate-600 hover:text-rose-500 font-semibold'
+            }`}
+          >
+            Home
+          </a>
+          <a 
+            href="/products" 
+            class={`relative py-1 transition-colors ${
+              isProducts 
+                ? 'text-rose-500 font-bold after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-rose-500 after:rounded-full' 
+                : 'text-slate-600 hover:text-rose-500 font-semibold'
+            }`}
+          >
+            Shop All
+          </a>
+          <a 
+            href="/track-order" 
+            class={`relative py-1 transition-colors ${
+              isTrack 
+                ? 'text-rose-500 font-bold after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-rose-500 after:rounded-full' 
+                : 'text-slate-600 hover:text-rose-500 font-semibold'
+            }`}
+          >
+            Track Order
+          </a>
+          <a 
+            href="/size-guide" 
+            class={`relative py-1 transition-colors ${
+              isSizeGuide 
+                ? 'text-rose-500 font-bold after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-rose-500 after:rounded-full' 
+                : 'text-slate-600 hover:text-rose-500 font-semibold'
+            }`}
+          >
+            Size Guide
+          </a>
+          <a 
+            href="/about" 
+            class={`relative py-1 transition-colors ${
+              isAbout 
+                ? 'text-rose-500 font-bold after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-rose-500 after:rounded-full' 
+                : 'text-slate-600 hover:text-rose-500 font-semibold'
+            }`}
+          >
+            About Us
+          </a>
+          <a 
+            href="/contact" 
+            class={`relative py-1 transition-colors ${
+              isContact 
+                ? 'text-rose-500 font-bold after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-rose-500 after:rounded-full' 
+                : 'text-slate-600 hover:text-rose-500 font-semibold'
+            }`}
+          >
+            Contact
+          </a>
+        </nav>
+
+        <!-- Right Action Icons -->
+        <div class="flex items-center gap-5">
+          <!-- Prominent Search Bar -->
+          <div class="hidden sm:flex items-center bg-slate-100 hover:bg-slate-100/80 focus-within:bg-white rounded-full px-4 py-2.5 border border-slate-200 focus-within:border-slate-400 focus-within:ring-2 focus-within:ring-slate-200 transition-all duration-300 w-60 md:w-80 lg:w-96 shadow-sm">
+            <!-- Search icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input 
+              type="text" 
+              placeholder="Search hoodies, jackets, thermal wear..." 
+              class="bg-transparent border-none text-sm pl-2.5 pr-1 focus:outline-none text-slate-800 placeholder:text-slate-400 w-full" 
+            />
+          </div>
+
+          <!-- Dynamic Cart Counter Island (React) -->
+          <HeaderCartBadge client:load />
+
+          <!-- Interactive Mobile Menu Drawer (React Island) -->
+          <MobileNav client:load currentPath={currentPath} />
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Page Content Slot -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-indigo-950 text-slate-300 pt-16 pb-12 mt-auto border-t border-indigo-900">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-indigo-900/80">
+          
+          <div class="space-y-4">
+            <div class="flex items-center gap-2 text-2xl font-black text-white">
+              <div class="w-9 h-9 rounded-lg bg-rose-500 flex items-center justify-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+              </div>
+              <span>Winter<span class="text-rose-400">Cart</span></span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Bangladesh's premium online winter clothing destination. Guaranteed high-grade fleece, genuine leather, cashmere wraps &amp; thermal wear.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Categories</h4>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="/products?category=hoodies" class="hover:text-white transition">Heavy Fleece Hoodies</a></li>
+              <li><a href="/products?category=jackets" class="hover:text-white transition">Leather &amp; Puffer Jackets</a></li>
+              <li><a href="/products?category=sweaters" class="hover:text-white transition">Knit Sweaters &amp; Cardigans</a></li>
+              <li><a href="/products?category=thermal" class="hover:text-white transition">Thermal Base Layers</a></li>
+              <li><a href="/products?category=shawls" class="hover:text-white transition">Pashmina &amp; Cashmere Shawls</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Customer Care</h4>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="/about" class="hover:text-white transition">About Our Brand</a></li>
+              <li><a href="/track-order" class="hover:text-white transition">Track Your Order</a></li>
+              <li><a href="/return-policy" class="hover:text-white transition">Return &amp; Exchange Policy</a></li>
+              <li><a href="/size-guide" class="hover:text-white transition">Size Guide</a></li>
+              <li><a href="/contact" class="hover:text-white transition">Contact Support</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Newsletter</h4>
+            <p class="text-xs text-slate-400 mb-3">Subscribe to get 10% off on your first winter order.</p>
+            <div class="flex gap-2">
+              <input type="email" placeholder="Enter your email" class="bg-indigo-900/60 border border-indigo-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none w-full" />
+              <button class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-lg text-xs transition">Join</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <p>&copy; 2026 WinterCart Bangladesh. All rights reserved.</p>
+          <div class="flex gap-6">
+            <a href="/privacy-policy" class="hover:text-slate-300 transition">Privacy Policy</a>
+            <a href="/terms-of-service" class="hover:text-slate-300 transition">Terms of Service</a>
+            <a href="/admin/login" class="hover:text-slate-300 transition opacity-80">Admin Portal</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global Floating WhatsApp Live Chat Button -->
+    <FloatingWhatsApp />
+
+  </body>
+</html>

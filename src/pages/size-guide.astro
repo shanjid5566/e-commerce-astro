@@ -1,0 +1,259 @@
+---
+// src/pages/size-guide.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Size Guide & Fitting Chart | WinterCart BD">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+    
+    {/* Breadcrumbs Navigation */}
+    <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6 sm:mb-8" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-rose-500 transition">Home</a>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-900 font-semibold">Size Guide</span>
+    </nav>
+
+    {/* Hero Header */}
+    <div class="text-center max-w-xl mx-auto space-y-3 mb-12">
+      <span class="text-xs font-bold text-rose-500 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100">
+        Fit Confidence
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-black text-indigo-950 tracking-tight">
+        Winter Apparel Size Guide
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+        Find your exact fit across hoodies, jackets, knit sweaters, and thermal base layers before placing your order.
+      </p>
+    </div>
+
+    {/* Measurement Method Visual Callouts */}
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-14">
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs space-y-2">
+        <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 font-bold flex items-center justify-center text-sm">
+          1
+        </div>
+        <h4 class="font-extrabold text-indigo-950 text-sm">Chest / Bust</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Measure around the fullest part of your chest, keeping the tape horizontal under your arms.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs space-y-2">
+        <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 font-bold flex items-center justify-center text-sm">
+          2
+        </div>
+        <h4 class="font-extrabold text-indigo-950 text-sm">Body Length</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Measure from the highest point of the shoulder down to your desired bottom hemline.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs space-y-2">
+        <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 font-bold flex items-center justify-center text-sm">
+          3
+        </div>
+        <h4 class="font-extrabold text-indigo-950 text-sm">Sleeve Length</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Measure from the shoulder seam along the outer edge of your arm down to the wrist bone.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs space-y-2">
+        <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 font-bold flex items-center justify-center text-sm">
+          4
+        </div>
+        <h4 class="font-extrabold text-indigo-950 text-sm">Shoulder Width</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          Measure straight across your back from one shoulder point seam to the other.
+        </p>
+      </div>
+    </div>
+
+    {/* Sizing Tables Section */}
+    <div class="space-y-12">
+      
+      {/* Table 1: Hoodies & Sweatshirts */}
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <span class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">350 GSM Heavy Fleece</span>
+            <h3 class="text-lg font-black text-indigo-950">Hoodies &amp; Sweatshirts Sizing (Inches)</h3>
+          </div>
+          <span class="text-xs bg-slate-100 text-slate-600 font-bold px-3 py-1 rounded-full">
+            Regular / Relaxed Fit
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-50 text-slate-500 font-bold uppercase text-[11px] border-b border-slate-100">
+                <th class="p-3">Size</th>
+                <th class="p-3">Chest (Round)</th>
+                <th class="p-3">Body Length</th>
+                <th class="p-3">Sleeve Length</th>
+                <th class="p-3">Recommended Weight</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
+              <tr>
+                <td class="p-3 font-bold text-indigo-950">M</td>
+                <td class="p-3">38" - 40"</td>
+                <td class="p-3">27"</td>
+                <td class="p-3">24.5"</td>
+                <td class="p-3 text-slate-500">50 - 62 kg</td>
+              </tr>
+              <tr class="bg-slate-50/50">
+                <td class="p-3 font-bold text-indigo-950">L</td>
+                <td class="p-3">40" - 42"</td>
+                <td class="p-3">28"</td>
+                <td class="p-3">25"</td>
+                <td class="p-3 text-slate-500">63 - 74 kg</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-indigo-950">XL</td>
+                <td class="p-3">42" - 44"</td>
+                <td class="p-3">29"</td>
+                <td class="p-3">25.5"</td>
+                <td class="p-3 text-slate-500">75 - 85 kg</td>
+              </tr>
+              <tr class="bg-slate-50/50">
+                <td class="p-3 font-bold text-indigo-950">XXL</td>
+                <td class="p-3">44" - 46"</td>
+                <td class="p-3">30"</td>
+                <td class="p-3">26"</td>
+                <td class="p-3 text-slate-500">86 - 98 kg</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Table 2: Leather & Puffer Jackets */}
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <span class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">Outerwear Layering</span>
+            <h3 class="text-lg font-black text-indigo-950">Jackets &amp; Coats Sizing (Inches)</h3>
+          </div>
+          <span class="text-xs bg-slate-100 text-slate-600 font-bold px-3 py-1 rounded-full">
+            Tailored Fit
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-50 text-slate-500 font-bold uppercase text-[11px] border-b border-slate-100">
+                <th class="p-3">Size</th>
+                <th class="p-3">Chest (Round)</th>
+                <th class="p-3">Shoulder Width</th>
+                <th class="p-3">Jacket Length</th>
+                <th class="p-3">Sleeve Length</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
+              <tr>
+                <td class="p-3 font-bold text-indigo-950">M</td>
+                <td class="p-3">40"</td>
+                <td class="p-3">17.5"</td>
+                <td class="p-3">26.5"</td>
+                <td class="p-3">24.5"</td>
+              </tr>
+              <tr class="bg-slate-50/50">
+                <td class="p-3 font-bold text-indigo-950">L</td>
+                <td class="p-3">42"</td>
+                <td class="p-3">18.5"</td>
+                <td class="p-3">27.5"</td>
+                <td class="p-3">25"</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-indigo-950">XL</td>
+                <td class="p-3">44"</td>
+                <td class="p-3">19.5"</td>
+                <td class="p-3">28.5"</td>
+                <td class="p-3">25.5"</td>
+              </tr>
+              <tr class="bg-slate-50/50">
+                <td class="p-3 font-bold text-indigo-950">XXL</td>
+                <td class="p-3">46"</td>
+                <td class="p-3">20.5"</td>
+                <td class="p-3">29.5"</td>
+                <td class="p-3">26"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Table 3: Thermal Base Layers */}
+      <div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-xs space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div>
+            <span class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">Heat-Lock Stretch Fabric</span>
+            <h3 class="text-lg font-black text-indigo-950">Thermal Innerwear Sets</h3>
+          </div>
+          <span class="text-xs bg-slate-100 text-slate-600 font-bold px-3 py-1 rounded-full">
+            Body-Hugging Stretch
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-50 text-slate-500 font-bold uppercase text-[11px] border-b border-slate-100">
+                <th class="p-3">Size</th>
+                <th class="p-3">Top Chest</th>
+                <th class="p-3">Bottom Waist</th>
+                <th class="p-3">Bottom Length</th>
+                <th class="p-3">Recommended Height</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
+              <tr>
+                <td class="p-3 font-bold text-indigo-950">S / M</td>
+                <td class="p-3">34" - 38"</td>
+                <td class="p-3">28" - 32"</td>
+                <td class="p-3">37"</td>
+                <td class="p-3 text-slate-500">5'2" - 5'7"</td>
+              </tr>
+              <tr class="bg-slate-50/50">
+                <td class="p-3 font-bold text-indigo-950">L / XL</td>
+                <td class="p-3">38" - 42"</td>
+                <td class="p-3">32" - 36"</td>
+                <td class="p-3">39"</td>
+                <td class="p-3 text-slate-500">5'7" - 6'0"</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-bold text-indigo-950">XXL</td>
+                <td class="p-3">42" - 46"</td>
+                <td class="p-3">36" - 40"</td>
+                <td class="p-3">41"</td>
+                <td class="p-3 text-slate-500">6'0" +</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    {/* Exchange Guarantee Reassurance Card */}
+    <div class="mt-12 bg-gradient-to-r from-rose-50 to-indigo-50 border border-rose-100 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+      <div class="space-y-1">
+        <h4 class="font-black text-indigo-950 text-base sm:text-lg">Still Unsure About Sizing?</h4>
+        <p class="text-xs sm:text-sm text-slate-600">
+          Order with complete peace of mind. If it doesn't fit right, our 7-day doorstep size exchange has you covered!
+        </p>
+      </div>
+      <a
+        href="/products"
+        class="inline-block bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold px-6 py-3 rounded-xl transition shadow-sm whitespace-nowrap text-center"
+      >
+        Shop Winter Collection
+      </a>
+    </div>
+
+  </div>
+</BaseLayout>
+

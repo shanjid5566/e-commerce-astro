@@ -1,0 +1,104 @@
+---
+// src/pages/contact.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/react/ContactForm';
+---
+
+<BaseLayout title="Contact Support | WinterCart BD">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+    
+    {/* Breadcrumbs Navigation */}
+    <nav class="flex items-center gap-2 text-xs text-slate-500 mb-6 sm:mb-8" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-rose-500 transition">Home</a>
+      <span class="text-slate-300">/</span>
+      <span class="text-slate-900 font-semibold">Contact Support</span>
+    </nav>
+
+    {/* Hero Header */}
+    <div class="text-center max-w-xl mx-auto space-y-3 mb-12">
+      <span class="text-xs font-bold text-rose-500 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100">
+        Customer Care
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-black text-indigo-950 tracking-tight">
+        We're Here to Help
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+        Have questions about size fits, order delivery, or returns? Reach out directly to our friendly customer support team.
+      </p>
+    </div>
+
+    {/* 2-Column Contact Channels Grid */}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      {/* Left Column: Direct Contact Info Cards */}
+      <div class="lg:col-span-5 space-y-4">
+        
+        {/* Hotline Card */}
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-xs flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl shrink-0">
+            📞
+          </div>
+          <div>
+            <h4 class="font-extrabold text-indigo-950 text-sm">Customer Hotline</h4>
+            <p class="text-xs text-slate-400 mb-2">Available 9:00 AM – 10:00 PM (Everyday)</p>
+            <a href="tel:+8801700000000" class="text-sm font-black text-rose-500 hover:underline">
+              +880 1700-000000
+            </a>
+          </div>
+        </div>
+
+        {/* WhatsApp Card */}
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-xs flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+            💬
+          </div>
+          <div>
+            <h4 class="font-extrabold text-indigo-950 text-sm">WhatsApp Live Chat</h4>
+            <p class="text-xs text-slate-400 mb-2">Instant sizing advice and live exchange assistance</p>
+            <a
+              href="https://wa.me/8801700000000"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 px-3.5 py-1.5 rounded-lg transition"
+            >
+              Start WhatsApp Chat
+            </a>
+          </div>
+        </div>
+
+        {/* Email Card */}
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-xs flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl shrink-0">
+            📧
+          </div>
+          <div>
+            <h4 class="font-extrabold text-indigo-950 text-sm">Email Support</h4>
+            <p class="text-xs text-slate-400 mb-1">Expect a reply within 2 to 4 hours</p>
+            <a href="mailto:support@wintercart.com.bd" class="text-xs font-bold text-slate-800 hover:text-rose-500 transition">
+              support@wintercart.com.bd
+            </a>
+          </div>
+        </div>
+
+        {/* Store & Office Address */}
+        <div class="bg-slate-900 text-white rounded-2xl p-5 sm:p-6 shadow-xs space-y-2">
+          <span class="text-xs font-bold text-rose-400 uppercase tracking-wider block">Showroom &amp; HQ</span>
+          <p class="text-sm font-bold text-white">WinterCart Flagship Studio</p>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            House #14, Road #07, Dhanmondi, Dhaka-1205, Bangladesh
+          </p>
+          <p class="text-[11px] text-slate-400 pt-1">Open Saturday to Thursday: 10:00 AM – 8:00 PM</p>
+        </div>
+
+      </div>
+
+      {/* Right Column: Interactive Contact Form */}
+      <div class="lg:col-span-7">
+        <ContactForm client:load />
+      </div>
+
+    </div>
+
+  </div>
+</BaseLayout>
+
