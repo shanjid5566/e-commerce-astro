@@ -6,7 +6,7 @@ import {
   Layers,
   Sliders,
   Megaphone,
-  Headphones,
+  MessageSquare,
   ArrowUpRight,
   Plus,
   ArrowRight,
@@ -256,8 +256,8 @@ export default function AdminDashboardOverview() {
                 className="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/80 transition font-bold text-indigo-950 group"
               >
                 <div className="flex items-center gap-2.5">
-                  <Headphones className="w-4 h-4 text-rose-500" />
-                  <span>Customer Support (2 pending)</span>
+                  <MessageSquare className="w-4 h-4 text-rose-500" />
+                  <span>Contact Inquiries (2 new)</span>
                 </div>
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition" />
               </a>

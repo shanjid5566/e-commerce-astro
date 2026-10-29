@@ -2,18 +2,18 @@
 // src/pages/admin/support.astro
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import AdminSupportManager from '../../components/react/admin/AdminSupportManager';
-import { getSupportTickets } from '../../services/supportService';
+import { getSupportMessages } from '../../services/supportService';
 
-const tickets = await getSupportTickets();
+const messages = await getSupportMessages();
 ---
 
 <AdminLayout
-  title="Customer Support"
-  heading="Support & Helpdesk"
-  subheading="Manage customer inquiries, sizing exchange requests, and send direct answers or WhatsApp assistance."
+  title="Customer Inquiries"
+  heading="Contact Form Submissions"
+  subheading="Manage inquiries submitted directly by customers through the website contact form, review messages, and send responses."
 >
   <AdminSupportManager
-    initialTickets={tickets}
+    initialMessages={messages}
     client:load
   />
 </AdminLayout>

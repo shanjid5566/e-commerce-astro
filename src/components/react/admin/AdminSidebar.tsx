@@ -7,7 +7,7 @@ import {
   ShoppingBag,
   Sliders,
   Megaphone,
-  Headphones,
+  MessageSquare,
   ExternalLink,
   LogOut,
   Menu,
@@ -90,11 +90,11 @@ export default function AdminSidebar({ currentPath }: Props) {
       active: currentPath.startsWith('/admin/announcements'),
     },
     {
-      label: 'Customer Support',
+      label: 'Contact Messages',
       href: '/admin/support',
-      icon: Headphones,
+      icon: MessageSquare,
       active: currentPath.startsWith('/admin/support'),
-      badge: '2',
+      badge: '2 New',
       badgeColor: 'bg-rose-500 text-white',
     },
   ];
