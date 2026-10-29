@@ -6,3 +6,4 @@ Disallow: /admin/
 Disallow: /cart
 
 Sitemap: https://e-commerce-astro-five.vercel.app/sitemap.xml
+

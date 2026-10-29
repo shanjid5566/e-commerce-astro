@@ -36,7 +36,7 @@ const products = await getProducts();
           Trending Winter Essentials
         </h2>
       </div>
-      <FeaturedProductGrid products={products} client:load />
+      <FeaturedProductGrid products={products} client:visible />
     </div>
   </section>
 
@@ -56,7 +56,7 @@ const products = await getProducts();
         </p>
       </div>
 
-      <FAQAccordion client:load />
+      <FAQAccordion client:visible />
 
     </div>
   </section>

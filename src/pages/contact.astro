@@ -95,9 +95,9 @@ import ContactForm from '../components/react/ContactForm';
 
       </div>
 
-      {/* Right Column: Interactive Contact Form */}
+      {/* Right Column: Interactive Contact Form (Hydrates when scrolled into view on mobile) */}
       <div class="lg:col-span-7">
-        <ContactForm client:load />
+        <ContactForm client:visible />
       </div>
 
     </div>

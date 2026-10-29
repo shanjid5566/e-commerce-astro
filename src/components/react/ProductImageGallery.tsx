@@ -52,6 +52,9 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
           key={activeIdx}
           src={galleryImages[activeIdx]}
           alt={`${title} - view ${activeIdx + 1}`}
+          width={600}
+          height={600}
+          decoding="async"
           className="w-full h-full object-cover object-center"
         />
 

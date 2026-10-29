@@ -66,6 +66,8 @@ export default function HeroSlider({ slides }: Props) {
                 key={`img-${current.id}-${direction}`}
                 src={current.image}
                 alt={current.title}
+                width={580}
+                height={620}
                 className={`max-h-full max-w-full object-contain filter drop-shadow-lg transition-transform duration-500 ease-out hover:scale-105 ${
                   direction === 'next' ? 'animate-hero-image-next' : 'animate-hero-image-prev'
                 }`}

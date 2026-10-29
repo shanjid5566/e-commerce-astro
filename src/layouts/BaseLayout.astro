@@ -112,10 +112,14 @@ const structuredData = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : de
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={fullImageUrl} />
 
-    <!-- Google Fonts Preconnect -->
+    <!-- Google Fonts Preconnect & High-Performance Asynchronous Font Loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" />
+    </noscript>
 
     <!-- Schema.org JSON-LD Structured Data -->
     {structuredData.map((schema) => (
@@ -243,11 +247,11 @@ const structuredData = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : de
             />
           </div>
 
-          <!-- Dynamic Cart Counter Island (React) -->
-          <HeaderCartBadge client:load />
+          <!-- Dynamic Cart Counter Island (Deferred idle hydration for max mobile speed) -->
+          <HeaderCartBadge client:idle />
 
-          <!-- Interactive Mobile Menu Drawer (React Island) -->
-          <MobileNav client:load currentPath={currentPath} />
+          <!-- Interactive Mobile Menu Drawer (Deferred idle hydration) -->
+          <MobileNav client:idle currentPath={currentPath} />
         </div>
 
       </div>
