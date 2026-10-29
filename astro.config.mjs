@@ -6,6 +6,7 @@ import path from 'path';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://e-commerce-astro-five.vercel.app',
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],

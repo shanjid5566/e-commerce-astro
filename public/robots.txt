@@ -1,0 +1,8 @@
+# robots.txt for WinterCart
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /cart
+
+Sitemap: https://e-commerce-astro-five.vercel.app/sitemap.xml

@@ -7,16 +7,70 @@ import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
 
 interface Props {
   title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'product';
+  canonicalUrl?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
-const { title = 'WinterCart | Premium Winter Clothing Store Bangladesh' } = Astro.props;
+const siteUrl = 'https://e-commerce-astro-five.vercel.app';
 const currentPath = Astro.url.pathname;
+
+const {
+  title = 'WinterCart BD | Premium Heavyweight Winter Clothing & Streetwear',
+  description = "Shop Bangladesh's premium winter clothing: heavyweight fleece hoodies, biker leather jackets, knit cardigans, and thermal wear with fast home delivery and cash on delivery.",
+  image = '/images/slides/slide-jacket-1.png',
+  type = 'website',
+  canonicalUrl = `${siteUrl}${currentPath === '/' ? '' : currentPath}`,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
 const isHome = currentPath === '/' || currentPath === '';
 const isProducts = currentPath.startsWith('/products');
 const isTrack = currentPath.startsWith('/track-order');
 const isSizeGuide = currentPath.startsWith('/size-guide');
 const isAbout = currentPath.startsWith('/about');
 const isContact = currentPath.startsWith('/contact');
+
+// Default Organization & WebSite JSON-LD
+const defaultSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'WinterCart Bangladesh',
+    url: siteUrl,
+    logo: `${siteUrl}/favicon.svg`,
+    sameAs: [
+      'https://facebook.com/wintercartbd',
+      'https://instagram.com/wintercartbd',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+8801700000000',
+      contactType: 'customer service',
+      areaServed: 'BD',
+      availableLanguage: ['English', 'Bengali'],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'WinterCart',
+    url: siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteUrl}/products?search={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  },
+];
+
+const structuredData = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : defaultSchema;
 ---
 
 <!DOCTYPE html>
@@ -24,10 +78,49 @@ const isContact = currentPath.startsWith('/contact');
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO Meta Tags -->
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    )}
+
+    <!-- Favicon & Brand Identity -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#1e1b4b" />
+
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullImageUrl} />
+    <meta property="og:site_name" content="WinterCart Bangladesh" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullImageUrl} />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    {structuredData.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
   </head>
   <body class="min-h-screen flex flex-col font-['Plus_Jakarta_Sans',sans-serif] bg-slate-50 text-slate-900 antialiased selection:bg-rose-500 selection:text-white">
 
@@ -144,6 +237,7 @@ const isContact = currentPath.startsWith('/contact');
             </svg>
             <input 
               type="text" 
+              aria-label="Search hoodies, jackets, thermal wear"
               placeholder="Search hoodies, jackets, thermal wear..." 
               class="bg-transparent border-none text-sm pl-2.5 pr-1 focus:outline-none text-slate-800 placeholder:text-slate-400 w-full" 
             />
@@ -210,10 +304,22 @@ const isContact = currentPath.startsWith('/contact');
           <div>
             <h4 class="text-white text-sm font-bold uppercase tracking-wider mb-4">Newsletter</h4>
             <p class="text-xs text-slate-400 mb-3">Subscribe to get 10% off on your first winter order.</p>
-            <div class="flex gap-2">
-              <input type="email" placeholder="Enter your email" class="bg-indigo-900/60 border border-indigo-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none w-full" />
-              <button class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-lg text-xs transition">Join</button>
-            </div>
+            <form class="flex gap-2" onsubmit="event.preventDefault(); alert('Thank you for subscribing to WinterCart updates!');">
+              <input
+                type="email"
+                required
+                aria-label="Email address for newsletter"
+                placeholder="Enter your email"
+                class="bg-indigo-900/60 border border-indigo-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none w-full"
+              />
+              <button
+                type="submit"
+                aria-label="Subscribe to newsletter"
+                class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-lg text-xs transition cursor-pointer"
+              >
+                Join
+              </button>
+            </form>
           </div>
 
         </div>

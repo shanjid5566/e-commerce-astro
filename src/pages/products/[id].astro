@@ -20,9 +20,72 @@ if (!product) {
 }
 
 const discountPercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+
+// Schema.org Product & BreadcrumbList JSON-LD
+const productSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    image: product.images && product.images.length > 0 ? product.images : [product.image],
+    description: product.description,
+    sku: product.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'WinterCart',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://e-commerce-astro-five.vercel.app/products/${product.id}`,
+      priceCurrency: 'BDT',
+      price: product.price,
+      itemCondition: 'https://schema.org/NewCondition',
+      availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'WinterCart Bangladesh',
+      },
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: product.rating,
+      reviewCount: product.reviewsCount || 12,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://e-commerce-astro-five.vercel.app',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: 'https://e-commerce-astro-five.vercel.app/products',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.title,
+        item: `https://e-commerce-astro-five.vercel.app/products/${product.id}`,
+      },
+    ],
+  },
+];
 ---
 
-<BaseLayout title={`${product.title} | WinterCart`}>
+<BaseLayout
+  title={`${product.title} - ৳${product.price} | WinterCart Bangladesh`}
+  description={`Order ${product.title} online at ৳${product.price} (discounted from ৳${product.originalPrice}). Heavyweight winter fabric, fast 2-3 days home delivery & cash on delivery across Bangladesh.`}
+  image={product.image}
+  type="product"
+  jsonLd={productSchema}
+>
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
     
     {/* Breadcrumbs Navigation */}
