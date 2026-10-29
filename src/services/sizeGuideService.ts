@@ -262,3 +262,4 @@ export async function resetSizeChartsToDefault(): Promise<SizeChart[]> {
   }
   return DEFAULT_SIZE_CHARTS;
 }
+
