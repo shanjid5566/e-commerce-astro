@@ -193,43 +193,6 @@ export default function AdminAnnouncementsManager({ initialAnnouncements }: Prop
         </button>
       </div>
 
-      {/* Live Storefront Ticker Simulation */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs p-5 space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-bold text-indigo-950">
-            <Eye className="w-4 h-4 text-rose-500" />
-            <span>Live Ticker Simulation (Storefront View)</span>
-          </div>
-          <span className="text-[11px] font-semibold text-slate-400">
-            {activeItems.length} active announcements
-          </span>
-        </div>
-
-        {/* The Simulation Bar */}
-        <div className="bg-indigo-950 text-slate-200 text-xs py-2.5 px-4 rounded-xl overflow-hidden relative select-none border border-indigo-900 shadow-inner">
-          {activeItems.length > 0 ? (
-            <div className="flex w-max animate-marquee space-x-12 cursor-default">
-              {[1, 2].map((loop) => (
-                <span key={loop} className="inline-flex items-center gap-6 font-medium tracking-wide">
-                  {activeItems.map((item, idx) => (
-                    <span key={`${item.id}-${loop}`} className="inline-flex items-center gap-2">
-                      <span>{item.icon}</span>
-                      <span>{item.text}</span>
-                      {idx < activeItems.length - 1 && (
-                        <span className="mx-4 text-slate-500">•</span>
-                      )}
-                    </span>
-                  ))}
-                </span>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center text-slate-400 text-xs py-1">
-              No active announcements. The top announcement bar is currently hidden on the storefront.
-            </div>
-          )}
-        </div>
-      </div>
 
       {/* Search & Status Filters */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs">

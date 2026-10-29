@@ -1,0 +1,21 @@
+---
+// src/pages/admin/size-guide.astro
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminSizeGuideManager from '../../components/react/admin/AdminSizeGuideManager';
+import { getSizeCharts, getMeasurementTips } from '../../services/sizeGuideService';
+
+const charts = await getSizeCharts();
+const tips = await getMeasurementTips();
+---
+
+<AdminLayout
+  title="Size Guide"
+  heading="Apparel Size Guide"
+  subheading="Manage size charts, garment measurements, and fit specifications displayed across the store."
+>
+  <AdminSizeGuideManager
+    initialCharts={charts}
+    initialTips={tips}
+    client:load
+  />
+</AdminLayout>

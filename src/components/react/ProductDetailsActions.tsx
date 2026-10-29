@@ -53,9 +53,14 @@ export default function ProductDetailsActions({ product }: Props) {
           <span className="font-bold text-slate-800 uppercase tracking-wider">
             Select Size: <span className="text-rose-500 font-black">{selectedSize}</span>
           </span>
-          <span className="text-slate-400 hover:text-slate-600 transition cursor-pointer">
+          <a
+            href="/size-guide"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-rose-500 font-semibold underline decoration-slate-300 underline-offset-4 hover:decoration-rose-400 transition cursor-pointer"
+          >
             Size Guide
-          </span>
+          </a>
         </div>
         <div className="flex flex-wrap gap-2.5">
           {SIZES.map((size) => (

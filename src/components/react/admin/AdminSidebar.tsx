@@ -8,6 +8,7 @@ import {
   Sliders,
   Megaphone,
   MessageSquare,
+  Ruler,
   ExternalLink,
   LogOut,
   Menu,
@@ -96,6 +97,12 @@ export default function AdminSidebar({ currentPath }: Props) {
       active: currentPath.startsWith('/admin/support'),
       badge: '2 New',
       badgeColor: 'bg-rose-500 text-white',
+    },
+    {
+      label: 'Size Guide',
+      href: '/admin/size-guide',
+      icon: Ruler,
+      active: currentPath.startsWith('/admin/size-guide'),
     },
   ];
 
