@@ -1,0 +1,32 @@
+---
+// src/pages/admin/hero-slides/[id]/edit.astro
+import AdminLayout from '../../../../layouts/AdminLayout.astro';
+import AdminHeroSlideForm from '../../../../components/react/admin/AdminHeroSlideForm';
+import { getHeroSlides } from '../../../../services/heroSliderService';
+
+export async function getStaticPaths() {
+  const slides = await getHeroSlides();
+  return slides.map((slide) => ({
+    params: { id: slide.id },
+    props: { slide },
+  }));
+}
+
+const { slide } = Astro.props;
+
+if (!slide) {
+  return Astro.redirect('/admin/hero-slides');
+}
+---
+
+<AdminLayout
+  title={`Edit Banner: ${slide.title}`}
+  heading="Edit Hero Banner"
+  subheading={`Updating homepage carousel slide #${slide.id}`}
+>
+  <AdminHeroSlideForm
+    initialSlide={slide}
+    isEdit={true}
+    client:load
+  />
+</AdminLayout>

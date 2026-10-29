@@ -30,18 +30,6 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-
-  // Form State for Add / Edit
-  const [formState, setFormState] = useState({
-    title: '',
-    category: 'Hoodies' as Product['category'],
-    price: 1200,
-    originalPrice: 1600,
-    image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80',
-    badge: 'Trending',
-  });
 
   // Filtered Products
   const filteredProducts = useMemo(() => {
@@ -68,74 +56,6 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
     return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredProducts, currentPage]);
 
-  const handleOpenAddModal = () => {
-    setEditingProduct(null);
-    setFormState({
-      title: '',
-      category: 'Hoodies',
-      price: 1200,
-      originalPrice: 1600,
-      image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80',
-      badge: 'Trending',
-    });
-    setIsAddModalOpen(true);
-  };
-
-  const handleOpenEditModal = (product: Product) => {
-    setEditingProduct(product);
-    setFormState({
-      title: product.title,
-      category: product.category,
-      price: product.price,
-      originalPrice: product.originalPrice,
-      image: product.image,
-      badge: product.badge || '',
-    });
-    setIsAddModalOpen(true);
-  };
-
-  const handleSaveProduct = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formState.title) return;
-
-    if (editingProduct) {
-      // Update existing
-      setProducts((prev) =>
-        prev.map((p) =>
-          p.id === editingProduct.id
-            ? {
-                ...p,
-                title: formState.title,
-                category: formState.category,
-                price: Number(formState.price),
-                originalPrice: Number(formState.originalPrice),
-                image: formState.image,
-                badge: formState.badge || undefined,
-              }
-            : p
-        )
-      );
-    } else {
-      // Create new
-      const newProduct: Product = {
-        id: `prod-${Date.now().toString().slice(-4)}`,
-        title: formState.title,
-        category: formState.category,
-        price: Number(formState.price),
-        originalPrice: Number(formState.originalPrice),
-        image: formState.image,
-        images: [formState.image],
-        rating: 4.8,
-        reviewCount: 1,
-        badge: formState.badge || undefined,
-        isFeatured: true,
-      };
-      setProducts((prev) => [newProduct, ...prev]);
-    }
-
-    setIsAddModalOpen(false);
-  };
-
   const handleDeleteProduct = (id: string) => {
     if (confirm('Are you sure you want to remove this product from the live catalog?')) {
       setProducts((prev) => prev.filter((p) => p.id !== id));
@@ -157,14 +77,13 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleOpenAddModal}
+        <a
+          href="/admin/products/new"
           className="inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm shadow-rose-200 transition cursor-pointer active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Product</span>
-        </button>
+        </a>
       </div>
 
       {/* Filter and Search Bar */}
@@ -314,14 +233,13 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
                       {/* Actions */}
                       <td className="py-3.5 px-4 text-right">
                         <div className="inline-flex items-center gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => handleOpenEditModal(p)}
+                          <a
+                            href={`/admin/products/${p.id}/edit`}
                             className="p-1.5 rounded-lg text-slate-500 hover:text-indigo-950 hover:bg-slate-100 transition cursor-pointer"
                             title="Edit Product"
                           >
                             <Edit2 className="w-4 h-4" />
-                          </button>
+                          </a>
                           <button
                             type="button"
                             onClick={() => handleDeleteProduct(p.id)}
@@ -368,138 +286,6 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
           />
         </div>
       </div>
-
-      {/* Add / Edit Product Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95">
-            
-            {/* Modal Header */}
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-extrabold text-indigo-950">
-                  {editingProduct ? 'Edit Product Details' : 'Add New Winter Product'}
-                </h3>
-                <p className="text-xs text-slate-400">
-                  {editingProduct ? `Updating SKU ${editingProduct.id}` : 'Publish a new item directly to the store'}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsAddModalOpen(false)}
-                className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Modal Form */}
-            <form onSubmit={handleSaveProduct} className="p-6 space-y-4">
-              
-              {/* Title */}
-              <div>
-                <label className="block text-xs font-bold text-indigo-950 mb-1">Product Title *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Over-Sized Fleece Winter Hoodie"
-                  value={formState.title}
-                  onChange={(e) => setFormState({ ...formState, title: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                />
-              </div>
-
-              {/* Category & Badge */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Category</label>
-                  <select
-                    value={formState.category}
-                    onChange={(e) => setFormState({ ...formState, category: e.target.value as any })}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  >
-                    <option value="Hoodies">Hoodies</option>
-                    <option value="Jackets">Jackets</option>
-                    <option value="Sweaters">Sweaters</option>
-                    <option value="Thermal">Thermal</option>
-                    <option value="Shawls">Shawls</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Badge Tag</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Best Seller, New"
-                    value={formState.badge}
-                    onChange={(e) => setFormState({ ...formState, badge: e.target.value })}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  />
-                </div>
-              </div>
-
-              {/* Price & Original Price */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Sale Price (৳) *</label>
-                  <input
-                    type="number"
-                    required
-                    min={0}
-                    value={formState.price}
-                    onChange={(e) => setFormState({ ...formState, price: Number(e.target.value) })}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Regular Price (৳) *</label>
-                  <input
-                    type="number"
-                    required
-                    min={0}
-                    value={formState.originalPrice}
-                    onChange={(e) => setFormState({ ...formState, originalPrice: Number(e.target.value) })}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  />
-                </div>
-              </div>
-
-              {/* Image URL */}
-              <div>
-                <label className="block text-xs font-bold text-indigo-950 mb-1">Primary Image URL</label>
-                <input
-                  type="url"
-                  required
-                  placeholder="https://..."
-                  value={formState.image}
-                  onChange={(e) => setFormState({ ...formState, image: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                />
-              </div>
-
-              {/* Modal Actions */}
-              <div className="pt-4 flex items-center justify-end gap-2.5 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100 transition cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-extrabold shadow-sm shadow-rose-200 transition cursor-pointer"
-                >
-                  {editingProduct ? 'Save Changes' : 'Publish Product'}
-                </button>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
-      )}
 
     </div>
   );

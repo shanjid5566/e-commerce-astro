@@ -19,79 +19,6 @@ interface Props {
 
 export default function AdminHeroSlidesManager({ initialSlides }: Props) {
   const [slides, setSlides] = useState<HeroSlide[]>(initialSlides);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [editingSlide, setEditingSlide] = useState<HeroSlide | null>(null);
-
-  const [formState, setFormState] = useState({
-    title: '',
-    subtitle: 'Winter Collection',
-    description: 'Guaranteed 100% warmth with export-grade fabric.',
-    image: '/images/slides/slide-jacket-1.png',
-    buttonText: 'Shop Now',
-    link: '/products',
-  });
-
-  const handleOpenAddModal = () => {
-    setEditingSlide(null);
-    setFormState({
-      title: '',
-      subtitle: 'Winter Warmth',
-      description: 'Engineered for cold winter days in Bangladesh.',
-      image: '/images/slides/slide-jacket-1.png',
-      buttonText: 'Shop Now',
-      link: '/products',
-    });
-    setIsAddModalOpen(true);
-  };
-
-  const handleOpenEditModal = (slide: HeroSlide) => {
-    setEditingSlide(slide);
-    setFormState({
-      title: slide.title,
-      subtitle: slide.subtitle,
-      description: slide.description || '',
-      image: slide.image,
-      buttonText: slide.buttonText || 'Shop Now',
-      link: slide.link,
-    });
-    setIsAddModalOpen(true);
-  };
-
-  const handleSaveSlide = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formState.title) return;
-
-    if (editingSlide) {
-      setSlides((prev) =>
-        prev.map((s) =>
-          s.id === editingSlide.id
-            ? {
-                ...s,
-                title: formState.title,
-                subtitle: formState.subtitle,
-                description: formState.description,
-                image: formState.image,
-                buttonText: formState.buttonText,
-                link: formState.link,
-              }
-            : s
-        )
-      );
-    } else {
-      const newSlide: HeroSlide = {
-        id: `slide-${Date.now()}`,
-        title: formState.title,
-        subtitle: formState.subtitle,
-        description: formState.description,
-        image: formState.image,
-        buttonText: formState.buttonText,
-        link: formState.link,
-      };
-      setSlides((prev) => [...prev, newSlide]);
-    }
-
-    setIsAddModalOpen(false);
-  };
 
   const handleDeleteSlide = (id: string) => {
     if (confirm('Delete this banner from the homepage carousel?')) {
@@ -114,14 +41,13 @@ export default function AdminHeroSlidesManager({ initialSlides }: Props) {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleOpenAddModal}
+        <a
+          href="/admin/hero-slides/new"
           className="inline-flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-sm shadow-rose-200 transition cursor-pointer active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Banner</span>
-        </button>
+        </a>
       </div>
 
       {/* Grid of Slides */}
@@ -174,14 +100,13 @@ export default function AdminHeroSlidesManager({ initialSlides }: Props) {
               </a>
 
               <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => handleOpenEditModal(slide)}
+                <a
+                  href={`/admin/hero-slides/${slide.id}/edit`}
                   className="p-1.5 text-slate-500 hover:text-indigo-950 hover:bg-slate-200/60 rounded-lg transition cursor-pointer"
                   title="Edit Banner"
                 >
                   <Edit2 className="w-3.5 h-3.5" />
-                </button>
+                </a>
                 <button
                   type="button"
                   onClick={() => handleDeleteSlide(slide.id)}
@@ -196,122 +121,6 @@ export default function AdminHeroSlidesManager({ initialSlides }: Props) {
           </div>
         ))}
       </div>
-
-      {/* Add / Edit Slide Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95">
-            
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-extrabold text-indigo-950">
-                  {editingSlide ? 'Edit Hero Banner' : 'Create New Hero Banner'}
-                </h3>
-                <p className="text-xs text-slate-400">Homepage hero carousel slide</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsAddModalOpen(false)}
-                className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveSlide} className="p-6 space-y-4">
-              
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Subtitle *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. New Arrival"
-                    value={formState.subtitle}
-                    onChange={(e) => setFormState({ ...formState, subtitle: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Button Text</label>
-                  <input
-                    type="text"
-                    placeholder="Shop Now"
-                    value={formState.buttonText}
-                    onChange={(e) => setFormState({ ...formState, buttonText: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-indigo-950 mb-1">Main Banner Title *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Mens Heavyweight Cotton Jacket"
-                  value={formState.title}
-                  onChange={(e) => setFormState({ ...formState, title: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-indigo-950 mb-1">Description</label>
-                <textarea
-                  rows={2}
-                  placeholder="Brief promotional copy for the slider..."
-                  value={formState.description}
-                  onChange={(e) => setFormState({ ...formState, description: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Slide Image Path / URL</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="/images/slides/slide-jacket-1.png"
-                    value={formState.image}
-                    onChange={(e) => setFormState({ ...formState, image: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-indigo-950 mb-1">Destination URL</label>
-                  <input
-                    type="text"
-                    placeholder="/products?category=jackets"
-                    value={formState.link}
-                    onChange={(e) => setFormState({ ...formState, link: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-4 flex items-center justify-end gap-2.5 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100 transition cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-extrabold shadow-sm shadow-rose-200 transition cursor-pointer"
-                >
-                  {editingSlide ? 'Save Slide' : 'Publish Banner'}
-                </button>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
-      )}
 
     </div>
   );

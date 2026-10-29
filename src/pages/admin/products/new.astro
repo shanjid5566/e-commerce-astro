@@ -1,0 +1,20 @@
+---
+// src/pages/admin/products/new.astro
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import AdminProductForm from '../../../components/react/admin/AdminProductForm';
+import { getCategories } from '../../../services/productService';
+
+const categories = await getCategories();
+---
+
+<AdminLayout
+  title="Create Product"
+  heading="New Winter Apparel Product"
+  subheading="Publish a new product item with pricing, inventory, and multiple high-resolution photos"
+>
+  <AdminProductForm
+    categories={categories}
+    isEdit={false}
+    client:load
+  />
+</AdminLayout>
