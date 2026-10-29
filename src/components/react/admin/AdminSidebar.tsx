@@ -74,6 +74,13 @@ export default function AdminSidebar({ currentPath }: Props) {
       badge: 'New',
       badgeColor: 'bg-rose-500 text-white',
     },
+    {
+      label: 'Hero Banners',
+      href: '/admin/hero-slides',
+      icon: Sliders,
+      active: currentPath.startsWith('/admin/hero-slides'),
+      badge: '9',
+    },
   ];
 
   return (

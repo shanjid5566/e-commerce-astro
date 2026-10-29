@@ -1,5 +1,19 @@
 ---
 // src/pages/admin/hero-slides.astro
-// Hero banner items are managed directly in the products catalog
-return Astro.redirect('/admin/products');
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminHeroSlidesManager from '../../components/react/admin/AdminHeroSlidesManager';
+import { getProducts } from '../../services/productService';
+
+const products = await getProducts();
 ---
+
+<AdminLayout
+  title="Hero Banners"
+  heading="Homepage Hero Banners"
+  subheading="Manage featured products displayed on the homepage hero carousel. Each slide links directly to that product's details page."
+>
+  <AdminHeroSlidesManager
+    initialProducts={products}
+    client:load
+  />
+</AdminLayout>
