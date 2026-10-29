@@ -7,6 +7,7 @@ import {
   ShoppingBag,
   Sliders,
   Megaphone,
+  Headphones,
   ExternalLink,
   LogOut,
   Menu,
@@ -87,6 +88,14 @@ export default function AdminSidebar({ currentPath }: Props) {
       href: '/admin/announcements',
       icon: Megaphone,
       active: currentPath.startsWith('/admin/announcements'),
+    },
+    {
+      label: 'Customer Support',
+      href: '/admin/support',
+      icon: Headphones,
+      active: currentPath.startsWith('/admin/support'),
+      badge: '2',
+      badgeColor: 'bg-rose-500 text-white',
     },
   ];
 

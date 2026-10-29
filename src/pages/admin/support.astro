@@ -1,0 +1,19 @@
+---
+// src/pages/admin/support.astro
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminSupportManager from '../../components/react/admin/AdminSupportManager';
+import { getSupportTickets } from '../../services/supportService';
+
+const tickets = await getSupportTickets();
+---
+
+<AdminLayout
+  title="Customer Support"
+  heading="Support & Helpdesk"
+  subheading="Manage customer inquiries, sizing exchange requests, and send direct answers or WhatsApp assistance."
+>
+  <AdminSupportManager
+    initialTickets={tickets}
+    client:load
+  />
+</AdminLayout>
