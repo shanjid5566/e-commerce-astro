@@ -13,7 +13,9 @@ import {
   X,
   ExternalLink,
   Sparkles,
-  Tag
+  Tag,
+  ChevronDown,
+  RotateCcw
 } from 'lucide-react';
 
 interface Props {
@@ -48,8 +50,13 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
         p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.id.toLowerCase().includes(searchQuery.toLowerCase());
+      const pCat = p.category.toLowerCase();
+      const sCat = selectedCategory.toLowerCase();
       const matchesCategory =
-        selectedCategory === 'all' || p.category.toLowerCase() === selectedCategory.toLowerCase();
+        selectedCategory === 'all' ||
+        pCat === sCat ||
+        sCat.includes(pCat) ||
+        pCat.includes(sCat);
       return matchesSearch && matchesCategory;
     });
   }, [products, searchQuery, selectedCategory]);
@@ -163,54 +170,65 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs">
         
-        {/* Search */}
-        <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search by title, SKU, category..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1);
-            }}
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
-          />
-        </div>
-
-        {/* Category Pill Filters */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedCategory('all');
-              setCurrentPage(1);
-            }}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer ${
-              selectedCategory === 'all'
-                ? 'bg-indigo-950 text-white shadow-xs'
-                : 'text-slate-600 hover:bg-slate-100'
-            }`}
-          >
-            All ({products.length})
-          </button>
-          {categories.map((c) => (
-            <button
-              key={c.id}
-              type="button"
-              onClick={() => {
-                setSelectedCategory(c.name);
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+          {/* Search Input */}
+          <div className="relative w-full sm:w-80">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search by title, SKU, category..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer ${
-                selectedCategory.toLowerCase() === c.name.toLowerCase()
-                  ? 'bg-indigo-950 text-white shadow-xs'
-                  : 'text-slate-600 hover:bg-slate-100'
-              }`}
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition"
+            />
+          </div>
+
+          {/* Category Dropdown Filter */}
+          <div className="relative w-full sm:w-64">
+            <Filter className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <select
+              value={selectedCategory}
+              onChange={(e) => {
+                setSelectedCategory(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full pl-9 pr-9 py-2 bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition cursor-pointer appearance-none shadow-2xs"
             >
-              {c.name}
+              <option value="all">All Categories ({products.length})</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.slug}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+
+          {/* Reset Filters Shortcut */}
+          {(selectedCategory !== 'all' || searchQuery) && (
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('all');
+                setSearchQuery('');
+                setCurrentPage(1);
+              }}
+              className="text-xs font-bold text-rose-500 hover:text-rose-600 px-2.5 py-1.5 rounded-lg hover:bg-rose-50 transition cursor-pointer flex items-center gap-1 self-start sm:self-auto shrink-0"
+              title="Reset search and filters"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset</span>
             </button>
-          ))}
+          )}
+        </div>
+
+        {/* Total Count Indicator */}
+        <div className="text-xs text-slate-400 font-semibold hidden md:block">
+          Showing <span className="font-extrabold text-indigo-950">{filteredProducts.length}</span> of{' '}
+          <span className="font-extrabold text-indigo-950">{products.length}</span> products
         </div>
 
       </div>
@@ -486,3 +504,4 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
     </div>
   );
 }
+

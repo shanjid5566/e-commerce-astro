@@ -316,3 +316,4 @@ export default function AdminHeroSlidesManager({ initialSlides }: Props) {
     </div>
   );
 }
+
