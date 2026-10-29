@@ -38,14 +38,14 @@ export default function ProductCard({ product }: Props) {
       className="bg-white rounded-xl sm:rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between group overflow-hidden cursor-pointer"
     >
       {/* Product Image Area */}
-      <div className="relative aspect-[4/4] overflow-hidden bg-slate-50 flex items-center justify-center p-3 sm:p-4">
+      <div className="relative aspect-[4/4] overflow-hidden bg-white flex items-center justify-center p-3 sm:p-4">
         <img
           src={product.image}
           alt={product.title}
           width={400}
           height={400}
           decoding="async"
-          className="max-h-full max-w-full object-contain filter drop-shadow-xs group-hover:scale-105 transition-transform duration-300"
+          className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
         />
 

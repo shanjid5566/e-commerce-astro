@@ -31,8 +31,8 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
 
   return (
     <div className="w-full space-y-4 select-none">
-      {/* 1. Main Featured Image Container with balanced padding & containment */}
-      <div className="relative w-full aspect-[4/5] max-h-[640px] rounded-3xl overflow-hidden bg-slate-50 shadow-md border border-slate-200/80 flex items-center justify-center p-6 sm:p-10 group">
+      {/* 1. Main Featured Image Container - completely transparent / white with no grey background color */}
+      <div className="relative w-full aspect-[4/5] max-h-[640px] rounded-3xl overflow-hidden bg-transparent flex items-center justify-center p-2 sm:p-6 group">
         {/* Badge Top Left */}
         {badge && (
           <span className="absolute top-4 left-4 bg-indigo-950/90 backdrop-blur-md text-white text-xs font-black px-3.5 py-1.5 rounded-xl shadow-lg uppercase tracking-wider z-10 border border-white/10">
@@ -55,7 +55,7 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
           width={600}
           height={600}
           decoding="async"
-          className="max-h-full max-w-full object-contain object-center filter drop-shadow-md transition-transform duration-300 ease-out group-hover:scale-102"
+          className="max-h-full max-w-full object-contain object-center transition-transform duration-300 ease-out group-hover:scale-102"
         />
 
         {/* Left & Right Main Navigation Arrows */}
@@ -108,7 +108,7 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
                   key={idx}
                   type="button"
                   onClick={() => setActiveIdx(idx)}
-                  className={`relative w-20 h-24 sm:w-22 sm:h-26 rounded-2xl overflow-hidden shrink-0 cursor-pointer border-2 transition-all duration-200 bg-slate-50 p-2 flex items-center justify-center ${
+                  className={`relative w-20 h-24 sm:w-22 sm:h-26 rounded-2xl overflow-hidden shrink-0 cursor-pointer border-2 transition-all duration-200 bg-transparent p-1.5 flex items-center justify-center ${
                     isActive
                       ? 'border-slate-900 shadow-md ring-2 ring-slate-900/10 scale-102 opacity-100'
                       : 'border-slate-200/90 opacity-60 hover:opacity-100 hover:border-slate-400'
