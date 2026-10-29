@@ -4,6 +4,7 @@ import '../styles/global.css';
 import HeaderCartBadge from '../components/react/HeaderCartBadge';
 import MobileNav from '../components/react/MobileNav';
 import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import { getAnnouncements } from '../services/announcementService';
 
 interface Props {
   title?: string;
@@ -17,6 +18,8 @@ interface Props {
 
 const siteUrl = 'https://e-commerce-astro-five.vercel.app';
 const currentPath = Astro.url.pathname;
+const allAnnouncements = await getAnnouncements();
+const activeAnnouncements = allAnnouncements.filter((a) => a.isActive);
 
 const {
   title = 'WinterCart BD | Premium Heavyweight Winter Clothing & Streetwear',
@@ -129,26 +132,31 @@ const structuredData = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : de
   <body class="min-h-screen flex flex-col font-['Plus_Jakarta_Sans',sans-serif] bg-slate-50 text-slate-900 antialiased selection:bg-rose-500 selection:text-white">
 
     <!-- Global Top Announcement Bar (Smooth Right-to-Left Ticker) -->
-    <div class="bg-indigo-950 text-slate-200 text-xs py-2 border-b border-indigo-900 overflow-hidden relative select-none">
-      <div class="flex w-max animate-marquee space-x-12 cursor-default">
-        <span class="inline-flex items-center gap-2 font-medium tracking-wide">
-          <span>🔥</span>
-          <span>Free Cash on Delivery for orders above ৳2,500 across Bangladesh!</span>
-          <span class="mx-6 text-slate-500">•</span>
-          <span>Guaranteed 100% Winter Warmth Fabric</span>
-          <span class="mx-6 text-slate-500">•</span>
-          <span>2-3 Days Fast Home Delivery</span>
-        </span>
-        <span class="inline-flex items-center gap-2 font-medium tracking-wide">
-          <span>🔥</span>
-          <span>Free Cash on Delivery for orders above ৳2,500 across Bangladesh!</span>
-          <span class="mx-6 text-slate-500">•</span>
-          <span>Guaranteed 100% Winter Warmth Fabric</span>
-          <span class="mx-6 text-slate-500">•</span>
-          <span>2-3 Days Fast Home Delivery</span>
-        </span>
+    {activeAnnouncements.length > 0 && (
+      <div class="bg-indigo-950 text-slate-200 text-xs py-2 border-b border-indigo-900 overflow-hidden relative select-none">
+        <div class="flex w-max animate-marquee space-x-12 cursor-default">
+          {[1, 2].map(() => (
+            <span class="inline-flex items-center gap-6 font-medium tracking-wide">
+              {activeAnnouncements.map((item, idx) => (
+                <span class="inline-flex items-center gap-2">
+                  {item.icon && <span>{item.icon}</span>}
+                  {item.link ? (
+                    <a href={item.link} class="hover:underline hover:text-white transition">
+                      {item.text}
+                    </a>
+                  ) : (
+                    <span>{item.text}</span>
+                  )}
+                  {idx < activeAnnouncements.length - 1 && (
+                    <span class="mx-4 text-slate-500">•</span>
+                  )}
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
+    )}
 
     <!-- Main Header / Navbar -->
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">

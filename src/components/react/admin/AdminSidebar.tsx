@@ -6,6 +6,7 @@ import {
   Layers,
   ShoppingBag,
   Sliders,
+  Megaphone,
   ExternalLink,
   LogOut,
   Menu,
@@ -80,6 +81,12 @@ export default function AdminSidebar({ currentPath }: Props) {
       icon: Sliders,
       active: currentPath.startsWith('/admin/hero-slides'),
       badge: '9',
+    },
+    {
+      label: 'Announcements',
+      href: '/admin/announcements',
+      icon: Megaphone,
+      active: currentPath.startsWith('/admin/announcements'),
     },
   ];
 

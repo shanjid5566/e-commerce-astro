@@ -1,0 +1,19 @@
+---
+// src/pages/admin/announcements.astro
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminAnnouncementsManager from '../../components/react/admin/AdminAnnouncementsManager';
+import { getAnnouncements } from '../../services/announcementService';
+
+const announcements = await getAnnouncements();
+---
+
+<AdminLayout
+  title="Announcements"
+  heading="Top Announcement Bar"
+  subheading="Manage promotional banners, shipping alerts, and marquee announcements displayed at the top of the storefront."
+>
+  <AdminAnnouncementsManager
+    initialAnnouncements={announcements}
+    client:load
+  />
+</AdminLayout>
