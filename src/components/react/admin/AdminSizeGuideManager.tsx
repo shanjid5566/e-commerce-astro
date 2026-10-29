@@ -905,3 +905,4 @@ export default function AdminSizeGuideManager({ initialCharts, initialTips }: Pr
     </div>
   );
 }
+
