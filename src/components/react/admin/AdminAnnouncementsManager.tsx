@@ -404,3 +404,4 @@ export default function AdminAnnouncementsManager({ initialAnnouncements }: Prop
     </div>
   );
 }
+
