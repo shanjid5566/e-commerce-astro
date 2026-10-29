@@ -40,6 +40,29 @@ export async function getAnnouncements(): Promise<AnnouncementItem[]> {
       order: 4,
       link: '/products',
     },
+    {
+      id: 'ann-5',
+      icon: '🎁',
+      text: 'Use promo code WINTER10 for 10% discount on your first order',
+      isActive: true,
+      order: 5,
+    },
+    {
+      id: 'ann-6',
+      icon: '⚡',
+      text: 'Flash Deal: Up to 25% Off on Selected Winter Jackets & Hoodies!',
+      isActive: false,
+      order: 6,
+      link: '/products',
+    },
+    {
+      id: 'ann-7',
+      icon: '🛡️',
+      text: '7 Days Hassle-Free Exchange & Return Guarantee',
+      isActive: false,
+      order: 7,
+      link: '/return-policy',
+    },
   ];
 }
 

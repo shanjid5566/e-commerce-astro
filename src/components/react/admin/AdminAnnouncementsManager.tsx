@@ -1,6 +1,7 @@
 // src/components/react/admin/AdminAnnouncementsManager.tsx
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { AnnouncementItem } from '../../../services/announcementService';
+import Pagination from '../Pagination';
 import {
   Megaphone,
   Plus,
@@ -13,7 +14,8 @@ import {
   Sparkles,
   ArrowUpDown,
   Check,
-  AlertCircle
+  AlertCircle,
+  Search
 } from 'lucide-react';
 
 interface Props {
@@ -21,11 +23,17 @@ interface Props {
 }
 
 const EMOJI_PRESETS = ['🔥', '❄️', '🚚', '⭐', '⚡', '🛡️', '🎁', '🎉', '🏷️', '📢'];
+const ITEMS_PER_PAGE = 5;
 
 export default function AdminAnnouncementsManager({ initialAnnouncements }: Props) {
   const [announcements, setAnnouncements] = useState<AnnouncementItem[]>(initialAnnouncements);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Search, Status Filters & Pagination
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'All' | 'Active' | 'Inactive'>('All');
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Form State
   const [icon, setIcon] = useState('🔥');
@@ -33,6 +41,31 @@ export default function AdminAnnouncementsManager({ initialAnnouncements }: Prop
   const [link, setLink] = useState('');
   const [isActive, setIsActive] = useState(true);
   const [toastMessage, setToastMessage] = useState('');
+
+  const filteredAnnouncements = useMemo(() => {
+    return announcements.filter((item) => {
+      const query = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !query ||
+        item.text.toLowerCase().includes(query) ||
+        (item.link && item.link.toLowerCase().includes(query));
+
+      const matchesStatus =
+        statusFilter === 'All'
+          ? true
+          : statusFilter === 'Active'
+          ? item.isActive
+          : !item.isActive;
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [announcements, searchQuery, statusFilter]);
+
+  const totalPages = Math.ceil(filteredAnnouncements.length / ITEMS_PER_PAGE) || 1;
+  const paginatedAnnouncements = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredAnnouncements.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredAnnouncements, currentPage]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -88,7 +121,8 @@ export default function AdminAnnouncementsManager({ initialAnnouncements }: Prop
         isActive,
         order: announcements.length + 1,
       };
-      setAnnouncements((prev) => [...prev, newItem]);
+      setAnnouncements((prev) => [newItem, ...prev]);
+      setCurrentPage(1);
       showToast('New announcement created and published!');
     }
 
@@ -97,7 +131,14 @@ export default function AdminAnnouncementsManager({ initialAnnouncements }: Prop
 
   const handleDelete = (id: string) => {
     if (confirm('Delete this announcement?')) {
-      setAnnouncements((prev) => prev.filter((a) => a.id !== id));
+      setAnnouncements((prev) => {
+        const updated = prev.filter((a) => a.id !== id);
+        const newTotalPages = Math.ceil(updated.length / ITEMS_PER_PAGE) || 1;
+        if (currentPage > newTotalPages) {
+          setCurrentPage(newTotalPages);
+        }
+        return updated;
+      });
       showToast('Announcement removed.');
     }
   };
@@ -190,11 +231,85 @@ export default function AdminAnnouncementsManager({ initialAnnouncements }: Prop
         </div>
       </div>
 
+      {/* Search & Status Filters */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs">
+        <div className="relative w-full sm:w-80">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Search announcement text, link..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full pl-9 pr-8 py-2 bg-slate-50 hover:bg-slate-100/60 focus:bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition placeholder:text-slate-400"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => {
+                setSearchQuery('');
+                setCurrentPage(1);
+              }}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+              title="Clear search"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        {/* Status Filters */}
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
+          {(['All', 'Active', 'Inactive'] as const).map((status) => {
+            const isCurrent = statusFilter === status;
+            const count =
+              status === 'All'
+                ? announcements.length
+                : status === 'Active'
+                ? announcements.filter((a) => a.isActive).length
+                : announcements.filter((a) => !a.isActive).length;
+
+            return (
+              <button
+                key={status}
+                type="button"
+                onClick={() => {
+                  setStatusFilter(status);
+                  setCurrentPage(1);
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${
+                  isCurrent
+                    ? 'bg-indigo-950 text-white shadow-xs'
+                    : 'bg-slate-50 hover:bg-slate-100 text-slate-600'
+                }`}
+              >
+                <span>{status}</span>
+                <span
+                  className={`text-[10px] font-extrabold px-1.5 py-0.2 rounded-full ${
+                    isCurrent
+                      ? 'bg-white/20 text-white'
+                      : status === 'Active'
+                      ? 'bg-emerald-100 text-emerald-700'
+                      : 'bg-slate-200/80 text-slate-600'
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Announcements Data Table */}
       <div className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
         <div className="p-4 border-b border-slate-100 flex items-center justify-between">
           <h3 className="font-extrabold text-sm text-indigo-950">Active &amp; Scheduled Announcements</h3>
-          <span className="text-xs text-slate-400">Total: {announcements.length}</span>
+          <span className="text-xs text-slate-400">
+            Showing {paginatedAnnouncements.length} of {filteredAnnouncements.length} (Total: {announcements.length})
+          </span>
         </div>
 
         <div className="overflow-x-auto">
@@ -209,72 +324,92 @@ export default function AdminAnnouncementsManager({ initialAnnouncements }: Prop
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-slate-700">
-              {announcements.map((item) => (
-                <tr key={item.id} className="hover:bg-slate-50/60 transition">
-                  {/* Icon */}
-                  <td className="py-4 px-5 text-lg">
-                    <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                      {item.icon}
-                    </span>
-                  </td>
-
-                  {/* Text */}
-                  <td className="py-4 px-4 font-semibold text-indigo-950 max-w-md">
-                    <span>{item.text}</span>
-                  </td>
-
-                  {/* Destination Link */}
-                  <td className="py-4 px-4 text-slate-500">
-                    {item.link ? (
-                      <span className="font-mono text-[11px] bg-slate-100 px-2 py-0.5 rounded-md text-slate-700">
-                        {item.link}
+              {paginatedAnnouncements.length > 0 ? (
+                paginatedAnnouncements.map((item) => (
+                  <tr key={item.id} className="hover:bg-slate-50/60 transition">
+                    {/* Icon */}
+                    <td className="py-4 px-5 text-lg">
+                      <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+                        {item.icon}
                       </span>
-                    ) : (
-                      <span className="text-slate-300">—</span>
-                    )}
-                  </td>
+                    </td>
 
-                  {/* Active Toggle Switch */}
-                  <td className="py-4 px-4">
-                    <button
-                      type="button"
-                      onClick={() => handleToggleActive(item.id)}
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold cursor-pointer transition ${
-                        item.isActive
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          : 'bg-slate-100 text-slate-500 border border-slate-200'
-                      }`}
-                    >
-                      <span className={`w-1.5 h-1.5 rounded-full ${item.isActive ? 'bg-emerald-500' : 'bg-slate-400'}`} />
-                      <span>{item.isActive ? 'Live (Active)' : 'Inactive'}</span>
-                    </button>
-                  </td>
+                    {/* Text */}
+                    <td className="py-4 px-4 font-semibold text-indigo-950 max-w-md">
+                      <span>{item.text}</span>
+                    </td>
 
-                  {/* Actions */}
-                  <td className="py-4 px-5 text-right">
-                    <div className="inline-flex items-center gap-1.5">
+                    {/* Destination Link */}
+                    <td className="py-4 px-4 text-slate-500">
+                      {item.link ? (
+                        <span className="font-mono text-[11px] bg-slate-100 px-2 py-0.5 rounded-md text-slate-700">
+                          {item.link}
+                        </span>
+                      ) : (
+                        <span className="text-slate-300">—</span>
+                      )}
+                    </td>
+
+                    {/* Active Toggle Switch */}
+                    <td className="py-4 px-4">
                       <button
                         type="button"
-                        onClick={() => openEditModal(item)}
-                        className="p-1.5 text-slate-500 hover:text-indigo-950 hover:bg-slate-100 rounded-lg transition cursor-pointer"
-                        title="Edit Announcement"
+                        onClick={() => handleToggleActive(item.id)}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold cursor-pointer transition ${
+                          item.isActive
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                            : 'bg-slate-100 text-slate-500 border border-slate-200'
+                        }`}
                       >
-                        <Edit2 className="w-4 h-4" />
+                        <span className={`w-1.5 h-1.5 rounded-full ${item.isActive ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+                        <span>{item.isActive ? 'Live (Active)' : 'Inactive'}</span>
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(item.id)}
-                        className="p-1.5 text-slate-500 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition cursor-pointer"
-                        title="Delete Announcement"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
+                    </td>
+
+                    {/* Actions */}
+                    <td className="py-4 px-5 text-right">
+                      <div className="inline-flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => openEditModal(item)}
+                          className="p-1.5 text-slate-500 hover:text-indigo-950 hover:bg-slate-100 rounded-lg transition cursor-pointer"
+                          title="Edit Announcement"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(item.id)}
+                          className="p-1.5 text-slate-500 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition cursor-pointer"
+                          title="Delete Announcement"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="py-12 text-center text-slate-500">
+                    <p className="font-bold text-sm text-indigo-950 mb-1">No announcements found</p>
+                    <p className="text-xs text-slate-400">Try adjusting your search query or status filter.</p>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
+        </div>
+
+        {/* Integrated Pagination Component */}
+        <div className="p-4 border-t border-slate-100">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={(page) => setCurrentPage(page)}
+            totalItems={filteredAnnouncements.length}
+            itemsPerPage={ITEMS_PER_PAGE}
+          />
         </div>
       </div>
 
