@@ -1,7 +1,7 @@
 // src/components/react/HeroSlider.tsx
 import { useState, useEffect, useRef } from 'react';
 import type { HeroSlide } from '../../services/heroSliderService';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, Tag } from 'lucide-react';
 
 interface Props {
   slides: HeroSlide[];
@@ -59,36 +59,67 @@ export default function HeroSlider({ slides }: Props) {
         {/* Main 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 lg:gap-16 items-center w-full">
           
-          {/* Left Column: Fixed Bounding Box with Smooth Directional Transition */}
+          {/* Left Column: Fixed Bounding Box with Clickable Link to Product Details */}
           <div className="w-full flex items-center justify-center">
-            <div className="relative w-full max-w-[320px] sm:max-w-[440px] lg:max-w-[580px] h-[280px] sm:h-[400px] lg:h-[620px] flex items-center justify-center overflow-visible">
+            <a
+              href={current.link}
+              title={`View ${current.title} details`}
+              className="relative w-full max-w-[320px] sm:max-w-[440px] lg:max-w-[580px] h-[280px] sm:h-[400px] lg:h-[620px] flex items-center justify-center overflow-visible group cursor-pointer"
+            >
               <img
                 key={`img-${current.id}-${direction}`}
                 src={current.image}
                 alt={current.title}
                 width={580}
                 height={620}
-                className={`max-h-full max-w-full object-contain filter drop-shadow-lg transition-transform duration-500 ease-out hover:scale-105 ${
+                className={`max-h-full max-w-full object-contain filter drop-shadow-lg transition-transform duration-500 ease-out group-hover:scale-105 ${
                   direction === 'next' ? 'animate-hero-image-next' : 'animate-hero-image-prev'
                 }`}
               />
-            </div>
+            </a>
           </div>
 
-          {/* Right Column: Clean Minimalist Typography with Fade-Up Transition */}
+          {/* Right Column: Clean Typography, Price, & Direct Link to Product */}
           <div
             key={`txt-${current.id}-${direction}`}
             className="flex flex-col items-start justify-center text-left space-y-3 sm:space-y-4 lg:space-y-5 lg:pl-8 animate-hero-text"
           >
-            {current.subtitle && (
-              <span className="text-xs sm:text-sm lg:text-base text-slate-500 font-medium tracking-wide">
-                {current.subtitle}
-              </span>
-            )}
+            {/* Subtitle & Category pill */}
+            <div className="flex items-center gap-2.5 flex-wrap">
+              {current.subtitle && (
+                <span className="text-xs sm:text-sm lg:text-base text-slate-500 font-semibold tracking-wide">
+                  {current.subtitle}
+                </span>
+              )}
+              {current.price && (
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-rose-600 bg-rose-50 border border-rose-100 px-2.5 py-0.5 rounded-full">
+                  <Tag className="w-3 h-3 text-rose-500" />
+                  <span>Featured Product</span>
+                </span>
+              )}
+            </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+            {/* Clickable Product Title */}
+            <a
+              href={current.link}
+              className="text-2xl sm:text-4xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight hover:text-rose-500 transition-colors"
+            >
               {current.title}
-            </h1>
+            </a>
+
+            {/* Price Preview */}
+            {current.price && (
+              <div className="flex items-baseline gap-3 pt-0.5">
+                <span className="text-2xl sm:text-3xl font-black text-indigo-950">
+                  ৳{current.price.toLocaleString()}
+                </span>
+                {current.originalPrice && current.originalPrice > current.price && (
+                  <span className="text-sm sm:text-base text-slate-400 line-through">
+                    ৳{current.originalPrice.toLocaleString()}
+                  </span>
+                )}
+              </div>
+            )}
 
             {current.description && (
               <p className="text-slate-500 text-xs sm:text-sm lg:text-base max-w-md leading-relaxed">
@@ -96,19 +127,21 @@ export default function HeroSlider({ slides }: Props) {
               </p>
             )}
 
-            <div className="pt-1 sm:pt-4">
+            {/* Shop Now CTA Button -> Goes to /products/[id] */}
+            <div className="pt-2 sm:pt-4 flex items-center gap-3">
               <a
                 href={current.link}
-                className="inline-block border-2 border-slate-900 bg-transparent text-slate-900 hover:bg-slate-900 hover:text-white px-7 sm:px-8 py-3 sm:py-3.5 text-xs sm:text-sm font-bold tracking-wider uppercase transition-colors duration-200 cursor-pointer"
+                className="inline-flex items-center gap-2 border-2 border-slate-900 bg-transparent text-slate-900 hover:bg-slate-900 hover:text-white px-7 sm:px-8 py-3 sm:py-3.5 text-xs sm:text-sm font-bold tracking-wider uppercase transition-colors duration-200 cursor-pointer shadow-sm active:scale-95"
               >
-                {current.buttonText || 'Shop Now'}
+                <span>{current.buttonText || 'Shop Now'}</span>
+                <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </div>
 
         </div>
 
-        {/* Slide Indicator Dots: Naturally spaced right below content on mobile, pinned at bottom on desktop */}
+        {/* Slide Indicator Dots */}
         <div className="mt-6 lg:mt-0 lg:absolute lg:bottom-6 lg:left-1/2 lg:-translate-x-1/2 flex items-center justify-center gap-2 z-20">
           {slides.map((_, idx) => (
             <button

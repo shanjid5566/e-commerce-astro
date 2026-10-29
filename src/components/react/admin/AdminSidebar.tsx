@@ -57,7 +57,7 @@ export default function AdminSidebar({ currentPath }: Props) {
       href: '/admin/products',
       icon: Package,
       active: currentPath.startsWith('/admin/products'),
-      badge: '8',
+      badge: '12',
     },
     {
       label: 'Categories',
@@ -73,12 +73,6 @@ export default function AdminSidebar({ currentPath }: Props) {
       active: currentPath.startsWith('/admin/orders'),
       badge: 'New',
       badgeColor: 'bg-rose-500 text-white',
-    },
-    {
-      label: 'Hero Banners',
-      href: '/admin/hero-slides',
-      icon: Sliders,
-      active: currentPath.startsWith('/admin/hero-slides'),
     },
   ];
 

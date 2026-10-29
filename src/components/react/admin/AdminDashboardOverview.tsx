@@ -34,19 +34,19 @@ export default function AdminDashboardOverview() {
     },
     {
       title: 'Active Products',
-      value: '8 Items',
+      value: '12 Items',
       change: '100% in stock',
       changeType: 'positive',
       icon: Package,
       color: 'bg-indigo-50 text-indigo-600 border-indigo-100',
     },
     {
-      title: 'Hero Slides',
-      value: '9 Banners',
-      change: 'Homepage carousel live',
+      title: 'Hero Banner Items',
+      value: '9 Live',
+      change: 'Dynamic product slider',
       changeType: 'positive',
       icon: Sliders,
-      color: 'bg-amber-50 text-amber-600 border-amber-100',
+      color: 'bg-rose-50 text-rose-600 border-rose-100',
     },
   ];
 
@@ -211,18 +211,18 @@ export default function AdminDashboardOverview() {
               >
                 <div className="flex items-center gap-2.5">
                   <Package className="w-4 h-4 text-rose-500" />
-                  <span>Manage Products (8 items)</span>
+                  <span>Manage Products (12 items)</span>
                 </div>
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition" />
               </a>
 
               <a
-                href="/admin/hero-slides"
+                href="/admin/orders"
                 className="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/80 transition font-bold text-indigo-950 group"
               >
                 <div className="flex items-center gap-2.5">
-                  <Sliders className="w-4 h-4 text-indigo-600" />
-                  <span>Edit Homepage Banners</span>
+                  <ShoppingBag className="w-4 h-4 text-rose-500" />
+                  <span>Manage Customer Orders</span>
                 </div>
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-1 transition" />
               </a>

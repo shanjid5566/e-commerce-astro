@@ -23,7 +23,7 @@ interface Props {
   categories: Category[];
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 5;
 
 export default function AdminProductsManager({ initialProducts, categories }: Props) {
   const [products, setProducts] = useState<Product[]>(initialProducts);
@@ -221,13 +221,22 @@ export default function AdminProductsManager({ initialProducts, categories }: Pr
 
                       {/* Badge */}
                       <td className="py-3.5 px-4">
-                        {p.badge ? (
-                          <span className="px-2 py-0.5 rounded-md bg-rose-50 text-rose-600 font-extrabold text-[10px] border border-rose-100 uppercase tracking-wider">
-                            {p.badge}
-                          </span>
-                        ) : (
-                          <span className="text-slate-400">—</span>
-                        )}
+                        <div className="flex flex-col items-start gap-1">
+                          {p.badge && (
+                            <span className="px-2 py-0.5 rounded-md bg-rose-50 text-rose-600 font-extrabold text-[10px] border border-rose-100 uppercase tracking-wider">
+                              {p.badge}
+                            </span>
+                          )}
+                          {p.showInHeroBanner && (
+                            <span className="px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 font-extrabold text-[10px] border border-amber-200 uppercase tracking-wider flex items-center gap-1">
+                              <Sparkles className="w-2.5 h-2.5 text-amber-500" />
+                              <span>Hero Banner</span>
+                            </span>
+                          )}
+                          {!p.badge && !p.showInHeroBanner && (
+                            <span className="text-slate-400">—</span>
+                          )}
+                        </div>
                       </td>
 
                       {/* Actions */}
