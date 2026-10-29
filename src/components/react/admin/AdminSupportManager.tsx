@@ -83,13 +83,6 @@ export default function AdminSupportManager({ initialMessages }: Props) {
     showToast(`Response recorded for ${selectedMessage.name}!`);
   };
 
-  const handleUpdateStatus = (id: string, status: ContactMessage['status']) => {
-    setMessages((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, status } : m))
-    );
-    showToast(`Status updated to "${status}"`);
-  };
-
   return (
     <div className="space-y-6">
       
@@ -269,19 +262,14 @@ export default function AdminSupportManager({ initialMessages }: Props) {
                   </h3>
                 </div>
 
-                {/* Status Switcher */}
-                <div className="flex items-center gap-2">
-                  <label className="text-xs font-bold text-slate-500">Status:</label>
-                  <select
-                    value={selectedMessage.status}
-                    onChange={(e) => handleUpdateStatus(selectedMessage.id, e.target.value as any)}
-                    className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-indigo-950 focus:outline-none cursor-pointer"
-                  >
-                    <option value="New">New</option>
-                    <option value="Replied">Replied</option>
-                    <option value="Closed">Closed</option>
-                  </select>
-                </div>
+                {/* Status Indicator Badge */}
+                <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full ${
+                  selectedMessage.status === 'New'
+                    ? 'bg-rose-50 text-rose-600 border border-rose-100'
+                    : 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                }`}>
+                  ● {selectedMessage.status}
+                </span>
               </div>
 
               {/* Customer Contact Card & Direct Reach Actions */}
