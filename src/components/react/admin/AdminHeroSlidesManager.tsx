@@ -177,8 +177,8 @@ export default function AdminHeroSlidesManager({ initialProducts }: Props) {
               </p>
 
               <div className="pt-2 text-[11px] text-slate-400 border-t border-slate-100 flex items-center justify-between">
-                <span className="font-mono text-slate-500 truncate max-w-[170px]">
-                  /products/{p.id}
+                <span className="font-semibold text-slate-500">
+                  SKU: {p.id}
                 </span>
                 <span className="font-bold text-emerald-600">● In Stock</span>
               </div>
@@ -305,3 +305,4 @@ export default function AdminHeroSlidesManager({ initialProducts }: Props) {
     </div>
   );
 }
+
