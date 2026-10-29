@@ -70,7 +70,7 @@ export default function CartView() {
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-20 h-24 object-cover rounded-xl bg-slate-100 shrink-0 border border-slate-200"
+                className="w-20 h-24 object-contain p-1.5 rounded-xl bg-slate-50 shrink-0 border border-slate-200"
               />
 
               <div className="flex-1 min-w-0">

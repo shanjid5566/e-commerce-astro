@@ -31,8 +31,8 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
 
   return (
     <div className="w-full space-y-4 select-none">
-      {/* 1. Main Featured Image Container */}
-      <div className="relative w-full aspect-[4/5] max-h-[640px] rounded-3xl overflow-hidden bg-slate-100 shadow-md border border-slate-200/80 group">
+      {/* 1. Main Featured Image Container with balanced padding & containment */}
+      <div className="relative w-full aspect-[4/5] max-h-[640px] rounded-3xl overflow-hidden bg-slate-50 shadow-md border border-slate-200/80 flex items-center justify-center p-6 sm:p-10 group">
         {/* Badge Top Left */}
         {badge && (
           <span className="absolute top-4 left-4 bg-indigo-950/90 backdrop-blur-md text-white text-xs font-black px-3.5 py-1.5 rounded-xl shadow-lg uppercase tracking-wider z-10 border border-white/10">
@@ -47,7 +47,7 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
           </span>
         )}
 
-        {/* Main Image View */}
+        {/* Main Image View - object-contain ensures collars, sleeves, and hems are fully visible */}
         <img
           key={activeIdx}
           src={galleryImages[activeIdx]}
@@ -55,7 +55,7 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
           width={600}
           height={600}
           decoding="async"
-          className="w-full h-full object-cover object-center"
+          className="max-h-full max-w-full object-contain object-center filter drop-shadow-md transition-transform duration-300 ease-out group-hover:scale-102"
         />
 
         {/* Left & Right Main Navigation Arrows */}
@@ -82,10 +82,9 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
         )}
       </div>
 
-      {/* 2. Multiple Images Thumbnails Strip (Red box area) */}
+      {/* 2. Multiple Images Thumbnails Strip */}
       {galleryImages.length > 1 && (
         <div className="relative flex items-center pt-1">
-          {/* Optional Left Scroll Arrow for Thumbnails */}
           {galleryImages.length > 4 && (
             <button
               type="button"
@@ -109,7 +108,7 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
                   key={idx}
                   type="button"
                   onClick={() => setActiveIdx(idx)}
-                  className={`relative w-20 h-24 sm:w-22 sm:h-26 rounded-2xl overflow-hidden shrink-0 cursor-pointer border-2 transition-all duration-200 ${
+                  className={`relative w-20 h-24 sm:w-22 sm:h-26 rounded-2xl overflow-hidden shrink-0 cursor-pointer border-2 transition-all duration-200 bg-slate-50 p-2 flex items-center justify-center ${
                     isActive
                       ? 'border-slate-900 shadow-md ring-2 ring-slate-900/10 scale-102 opacity-100'
                       : 'border-slate-200/90 opacity-60 hover:opacity-100 hover:border-slate-400'
@@ -119,7 +118,7 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
                   <img
                     src={imgUrl}
                     alt={`${title} thumbnail ${idx + 1}`}
-                    className="w-full h-full object-cover object-center"
+                    className="max-h-full max-w-full object-contain object-center"
                   />
                   {isActive && (
                     <div className="absolute inset-0 bg-slate-900/5 pointer-events-none" />
@@ -129,7 +128,6 @@ export default function ProductImageGallery({ images, title, badge }: Props) {
             })}
           </div>
 
-          {/* Optional Right Scroll Arrow for Thumbnails */}
           {galleryImages.length > 4 && (
             <button
               type="button"
