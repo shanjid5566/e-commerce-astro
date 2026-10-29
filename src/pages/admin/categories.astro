@@ -1,0 +1,19 @@
+---
+// src/pages/admin/categories.astro
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminCategoriesManager from '../../components/react/admin/AdminCategoriesManager';
+import { getCategories } from '../../services/productService';
+
+const categories = await getCategories();
+---
+
+<AdminLayout
+  title="Manage Categories"
+  heading="Category Departments"
+  subheading="Seasonal collections displayed on homepage cards and sidebar filters"
+>
+  <AdminCategoriesManager
+    initialCategories={categories}
+    client:load
+  />
+</AdminLayout>

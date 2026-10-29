@@ -1,0 +1,21 @@
+---
+// src/pages/admin/products.astro
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminProductsManager from '../../components/react/admin/AdminProductsManager';
+import { getProducts, getCategories } from '../../services/productService';
+
+const products = await getProducts();
+const categories = await getCategories();
+---
+
+<AdminLayout
+  title="Manage Products"
+  heading="Products Management"
+  subheading="Store catalog items, pricing, inventory stock, and badges"
+>
+  <AdminProductsManager
+    initialProducts={products}
+    categories={categories}
+    client:load
+  />
+</AdminLayout>

@@ -52,6 +52,9 @@ export default function AdminLoginForm() {
           if (rememberMe) {
             localStorage.setItem('wintercart_admin_user', email);
           }
+          setTimeout(() => {
+            window.location.href = '/admin';
+          }, 600);
         }
       } else {
         setIsLoading(false);

@@ -1,0 +1,111 @@
+---
+// src/layouts/AdminLayout.astro
+import '../styles/global.css';
+import AdminSidebar from '../components/react/admin/AdminSidebar';
+
+interface Props {
+  title?: string;
+  heading?: string;
+  subheading?: string;
+}
+
+const {
+  title = 'WinterCart Admin Console',
+  heading = 'Dashboard',
+  subheading = 'Store performance overview & catalog management',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const today = new Date().toLocaleDateString('en-US', {
+  weekday: 'short',
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} | WinterCart Admin</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-full font-['Plus_Jakarta_Sans',sans-serif] bg-slate-50 text-slate-900 antialiased selection:bg-rose-500 selection:text-white">
+
+    {/* Admin Sidebar Navigation */}
+    <AdminSidebar client:load currentPath={currentPath} />
+
+    {/* Main Content Area (Offset by lg:pl-72 for sidebar) */}
+    <div class="lg:pl-72 flex flex-col min-h-screen">
+      
+      {/* Admin Top App Bar */}
+      <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 py-3.5 shadow-2xs">
+        <div class="flex items-center justify-between gap-4">
+          
+          {/* Breadcrumb / Title */}
+          <div>
+            <h1 class="text-lg sm:text-xl font-black text-indigo-950 tracking-tight flex items-center gap-2">
+              <span>{heading}</span>
+            </h1>
+            <p class="text-xs text-slate-500 hidden sm:block">
+              {subheading}
+            </p>
+          </div>
+
+          {/* Top Actions: System Status, Date & Live Badge */}
+          <div class="flex items-center gap-3">
+            
+            {/* Live Store Status Pill */}
+            <div class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Store Live (Online)</span>
+            </div>
+
+            {/* Current Date */}
+            <div class="text-xs text-slate-500 font-semibold hidden md:block">
+              {today}
+            </div>
+
+            {/* Quick Visit Store Button */}
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 text-xs font-bold bg-indigo-950 hover:bg-indigo-900 text-white px-3.5 py-2 rounded-xl transition shadow-xs cursor-pointer"
+            >
+              <span>View Store</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+
+          </div>
+
+        </div>
+      </header>
+
+      {/* Main Page Workspace */}
+      <main class="flex-1 p-4 sm:p-8">
+        <div class="max-w-7xl mx-auto space-y-6">
+          <slot />
+        </div>
+      </main>
+
+      {/* Admin Footer */}
+      <footer class="px-4 sm:px-8 py-4 border-t border-slate-200/80 bg-white text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <p>&copy; {new Date().getFullYear()} WinterCart Bangladesh Internal System. All rights reserved.</p>
+        <p class="text-[11px] text-slate-400">Environment: Production (Vercel) • Latency: 24ms</p>
+      </footer>
+
+    </div>
+
+  </body>
+</html>

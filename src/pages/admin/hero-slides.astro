@@ -1,0 +1,19 @@
+---
+// src/pages/admin/hero-slides.astro
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminHeroSlidesManager from '../../components/react/admin/AdminHeroSlidesManager';
+import { getHeroSlides } from '../../services/heroSliderService';
+
+const slides = await getHeroSlides();
+---
+
+<AdminLayout
+  title="Hero Banners"
+  heading="Homepage Hero Banners"
+  subheading="Manage promotional slides, hero titles, descriptions, and CTA destination links"
+>
+  <AdminHeroSlidesManager
+    initialSlides={slides}
+    client:load
+  />
+</AdminLayout>

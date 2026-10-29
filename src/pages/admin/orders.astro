@@ -1,0 +1,13 @@
+---
+// src/pages/admin/orders.astro
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminOrdersManager from '../../components/react/admin/AdminOrdersManager';
+---
+
+<AdminLayout
+  title="Customer Orders"
+  heading="Orders & Parcel Tracking"
+  subheading="Manage checkout orders, print customer invoices, and update courier delivery status"
+>
+  <AdminOrdersManager client:load />
+</AdminLayout>

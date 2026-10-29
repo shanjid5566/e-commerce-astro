@@ -1,6 +1,13 @@
 ---
 // src/pages/admin/index.astro
-// Redirect to Admin Login page by default
-return Astro.redirect('/admin/login');
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import AdminDashboardOverview from '../../components/react/admin/AdminDashboardOverview';
 ---
 
+<AdminLayout
+  title="Admin Dashboard"
+  heading="Dashboard Overview"
+  subheading="Store operations, live order fulfillment & seasonal performance"
+>
+  <AdminDashboardOverview client:load />
+</AdminLayout>
